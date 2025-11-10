@@ -183,15 +183,49 @@
   </div>
 
   <script>
-    function openCart()
-{
-      alert("Shopping cart will be available once backend is added!");
-}
+  const API = "http://127.0.0.1:8000/api";
+  const headers = { "Content-Type": "application/json", "x-demo-token": "student1" };
 
-    function myItem(itemName)
-{
-      alert("You clicked on: " + itemName);
-}
+  async function api(path, opts = {}) {
+    const res = await fetch(API + path, { headers, ...opts });
+    if (!res.ok) throw new Error(await res.text());
+    return res.json();
+  }
+
+  async function openCart() {
+    try {
+      const c = await api("/cart");
+      alert("Subtotal: $" + c.subtotal);
+    } catch (e) {
+      alert("Cart error");
+    }
+  }
+
+  async function myItem(itemName) {
+    try {
+      await api("/cart/items", {
+        method: "POST",
+        body: JSON.stringify({ productId: itemName, qty: 1 })
+      });
+      alert(itemName + " added to cart");
+    } catch (e) {
+      alert("Add failed");
+    }
+  }
+
+  async function checkout() {
+    try {
+      const order = await api("/orders", { method: "POST" });
+      await api("/payments/mock", {
+        method: "POST",
+        body: JSON.stringify({ orderId: order.id })
+      });
+      alert("Order placed! Total: $" + order.total);
+    } catch (e) {
+      alert("Checkout failed");
+    }
+  }
   </script>
+
 </body>
 </html>
