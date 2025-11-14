@@ -2,53 +2,232 @@
 <head>
   <title>Best Buy</title>
   <style>
-    body
-{
+    body {
       background-color: #c8f2c2;
       font-family: Arial, sans-serif;
-}
+    }
 
-    table, th, td
-{
+    table, th, td {
       border: 1px solid black;
       border-collapse: collapse;
       padding: 5px;
-}
+    }
 
-    #cartButton
-{
+    #cartButton {
       position: fixed;
       top: 10px;
       right: 10px;
       background-color: transparent;
       border: none;
       cursor: pointer;
-}
+      position: fixed;
+      z-index: 999;
+    }
 
-    #cartButton img
-{
+    #cartButton img {
       width: 50px;
       height: 50px;
-}
+    }
 
-    #cartButton:hover img
-{
+    #cartButton:hover img {
       transform: scale(1.1);
       transition: transform 0.2s ease-in-out;
-}
+    }
 
-    button img
-{
+    #cartBadge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: #ff3333;
+      color: white;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      display: none;
+    }
+
+    #cartBadge.show {
+      display: flex;
+    }
+
+    button img {
       width: 10vw;
       height: 20vh;
       object-fit: cover;
-}
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      border-bottom: 1px solid #ddd;
+      background-color: #f9f9f9;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+
+    .cart-item-info {
+      flex: 1;
+    }
+
+    .cart-item-name {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .cart-item-price {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .cart-item-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .qty-control {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .qty-btn {
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 3px;
+      font-size: 16px;
+    }
+
+    .qty-btn:hover {
+      background-color: #0052a3;
+    }
+
+    .qty-display {
+      min-width: 30px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .remove-btn {
+      background-color: #cc0000;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+
+    .remove-btn:hover {
+      background-color: #990000;
+    }
+
+    .cart-summary {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #e8f4e8;
+      border-radius: 5px;
+      text-align: right;
+    }
+
+    .cart-subtotal {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .checkout-btn {
+      background-color: #00cc00;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .checkout-btn:hover {
+      background-color: #00aa00;
+    }
+
+    .empty-cart {
+      text-align: center;
+      padding: 40px;
+      color: #666;
+      font-size: 18px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+    }
   </style>
 </head>
 <body>
   <button id="cartButton" onclick="openCart()">
     <img src="https://png.pngtree.com/png-clipart/20190920/original/pngtree-shopping-cart-convenient-icon-png-image_4637407.jpg" alt="Shopping Cart"/>
+    <div id="cartBadge">0</div>
   </button>
+
+  <!-- Shopping Cart Modal -->
+  <div id="cartModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeCart()">&times;</span>
+      <h2>Shopping Cart</h2>
+      <div id="cartItems"></div>
+      <div id="cartSummary"></div>
+    </div>
+  </div>
 
   <h1>Best Buy</h1>
   <h2>By Mahir, Kellen, Chinemerem, and Kira</h2>
@@ -192,15 +371,87 @@
     return res.json();
   }
 
-  async function openCart() {
+  // Update cart badge
+  async function updateCartBadge() {
     try {
-      const c = await api("/cart");
-      alert("Subtotal: $" + c.subtotal);
+      const cart = await api("/cart");
+      const itemCount = cart.items.length;
+      const badge = document.getElementById("cartBadge");
+      
+      if (itemCount > 0) {
+        badge.textContent = itemCount;
+        badge.classList.add("show");
+      } else {
+        badge.classList.remove("show");
+      }
     } catch (e) {
-      alert("Cart error");
+      console.error("Badge update failed:", e);
     }
   }
 
+  // Open cart modal and display items
+  async function openCart() {
+    const modal = document.getElementById("cartModal");
+    modal.style.display = "block";
+    
+    const cartItems = document.getElementById("cartItems");
+    const cartSummary = document.getElementById("cartSummary");
+    
+    cartItems.innerHTML = '<div class="loading">Loading cart...</div>';
+    cartSummary.innerHTML = '';
+    
+    try {
+      const cart = await api("/cart");
+      
+      if (cart.items.length === 0) {
+        cartItems.innerHTML = '<div class="empty-cart">Your cart is empty</div>';
+        return;
+      }
+      
+      // Display cart items
+      cartItems.innerHTML = cart.items.map(item => `
+        <div class="cart-item">
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.productId}</div>
+            <div class="cart-item-price">$${item.price} each</div>
+          </div>
+          <div class="cart-item-controls">
+            <div class="qty-control">
+              <button class="qty-btn" onclick="decreaseQty('${item.productId}', ${item.qty})">-</button>
+              <span class="qty-display">${item.qty}</span>
+              <button class="qty-btn" onclick="increaseQty('${item.productId}', ${item.qty})">+</button>
+            </div>
+            <button class="remove-btn" onclick="removeItem('${item.productId}')">Remove</button>
+          </div>
+        </div>
+      `).join('');
+      
+      // Display cart summary
+      cartSummary.innerHTML = `
+        <div class="cart-summary">
+          <div class="cart-subtotal">Subtotal: $${cart.subtotal}</div>
+          <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+        </div>
+      `;
+    } catch (e) {
+      cartItems.innerHTML = '<div class="empty-cart">Error loading cart</div>';
+    }
+  }
+
+  // Close cart modal
+  function closeCart() {
+    document.getElementById("cartModal").style.display = "none";
+  }
+
+  // Close modal when clicking outside
+  window.onclick = function(event) {
+    const modal = document.getElementById("cartModal");
+    if (event.target == modal) {
+      closeCart();
+    }
+  }
+
+  // Add item to cart
   async function myItem(itemName) {
     try {
       await api("/cart/items", {
@@ -208,11 +459,61 @@
         body: JSON.stringify({ productId: itemName, qty: 1 })
       });
       alert(itemName + " added to cart");
+      await updateCartBadge();
     } catch (e) {
       alert("Add failed");
     }
   }
 
+  // Increase quantity
+  async function increaseQty(productId, currentQty) {
+    try {
+      await api(`/cart/items/${productId}`, {
+        method: "PATCH",
+        body: JSON.stringify({ qty: currentQty + 1 })
+      });
+      await openCart();
+      await updateCartBadge();
+    } catch (e) {
+      alert("Update failed");
+    }
+  }
+
+  // Decrease quantity
+  async function decreaseQty(productId, currentQty) {
+    if (currentQty <= 1) {
+      if (confirm("Remove this item from cart?")) {
+        await removeItem(productId);
+      }
+      return;
+    }
+    
+    try {
+      await api(`/cart/items/${productId}`, {
+        method: "PATCH",
+        body: JSON.stringify({ qty: currentQty - 1 })
+      });
+      await openCart();
+      await updateCartBadge();
+    } catch (e) {
+      alert("Update failed");
+    }
+  }
+
+  // Remove item from cart
+  async function removeItem(productId) {
+    try {
+      await api(`/cart/items/${productId}`, {
+        method: "DELETE"
+      });
+      await openCart();
+      await updateCartBadge();
+    } catch (e) {
+      alert("Remove failed");
+    }
+  }
+
+  // Checkout
   async function checkout() {
     try {
       const order = await api("/orders", { method: "POST" });
@@ -220,11 +521,16 @@
         method: "POST",
         body: JSON.stringify({ orderId: order.id })
       });
-      alert("Order placed! Total: $" + order.total);
+      alert("Order placed successfully! Order ID: " + order.id + "\nTotal: $" + order.total);
+      closeCart();
+      await updateCartBadge();
     } catch (e) {
-      alert("Checkout failed");
+      alert("Checkout failed: " + e.message);
     }
   }
+
+  // Initialize cart badge on page load
+  updateCartBadge();
   </script>
 
 </body>
