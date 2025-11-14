@@ -1,0 +1,18 @@
+CREATE DATABASE IF NOT EXISTS bestbuy_app
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+USE bestbuy_app;
+
+CREATE USER IF NOT EXISTS 'bestbuy_user'@'localhost' IDENTIFIED BY 'Software5432';
+GRANT ALL PRIVILEGES ON bestbuy_app.* TO 'bestbuy_user'@'localhost';
+FLUSH PRIVILEGES;
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(120) NOT NULL,
+  email VARCHAR(190) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  address TEXT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
