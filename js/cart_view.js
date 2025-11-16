@@ -25,7 +25,7 @@ $(document).ready(function(){
         const productID = productDiv.data('product-id');
         const input = productDiv.find('.quantity-input');
 
-        let currentQty = parseInt(input.val()) || 1;
+        let currentQty = parseInt(input.val()) || 0;
         currentQty++;
 
         input.val(currentQty);
@@ -39,7 +39,7 @@ $(document).ready(function(){
         const productID = productDiv.data('product-id');
         const input = productDiv.find('.quantity-input');
 
-        let currentQty = parseInt(input.val()) || 1;
+        let currentQty = parseInt(input.val()) || 0;
         if (currentQty > 0){
             currentQty--;
         }
@@ -49,6 +49,21 @@ $(document).ready(function(){
         updateLineTotal(productDiv, productID);
         updateCartTotal();
     })
+
+    $('.quantity-input').on('input', function(){
+        const productDiv = $(this).closest('.product');
+        const productID = productDiv.data('product-id');
+        
+        let qty = parseInt($(this).val()) || 0;  
+        if (qty < 0) {
+            qty = 0;
+            $(this).val(qty);
+        }
+        
+        products[productID].quantity = qty;
+        updateLineTotal(productDiv, productID);
+        updateCartTotal();
+    });
 
     function updateLineTotal(productDiv, productID){
         const qty = products[productID].quantity;
