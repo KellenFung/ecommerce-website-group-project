@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="../styles/cart_view.css"/>
+</head>
+<body>
+    <div class="main_container">
+        <div class="products_container">
+            <div class="product" data-product-id="apple">
+                <div class="product_image">
+                    <img src="../temp_images/apple.jpg" alt="Apple"/>
+                </div>
+                <div class="product_description">
+                    <h3>Apple</h3>
+                    <div class="count-container">
+                        <div class="subtract-counter">-</div>
+                        <div class="counter">
+                            <input type="text" class="quantity-input"/>
+                        </div>
+                        <div class="add-counter">+</div>
+                    </div>
+                </div>
+            </div>
+            <div class="product" data-product-id="banana">
+                <div class="product_image">
+                    <img src="../temp_images/banana.jpg" alt="Banana"/>
+                </div>
+                <div class="product_description">
+                    <h3>Banana</h3>
+                    <div class="count-container">
+                        <div class="subtract-counter">-</div>
+                        <div class="counter">
+                            <input type="text" class="quantity-input"/>
+                        </div>
+                        <div class="add-counter">+</div>
+                    </div>
+                </div>
+            </div>
+            <div class="product" data-product-id="smoothie">
+                <div class="product_image">
+                    <img src="../temp_images/smoothie.jpg" alt="Smoothie"/>
+                </div>
+                <div class="product_description">
+                    <h3>Smoothie</h3>
+                    <div class="count-container">
+                        <div class="subtract-counter">-</div>
+                        <div class="counter">
+                            <input type="text" class="quantity-input"/>
+                        </div>
+                        <div class="add-counter">+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="order-detail-container">
+            <div class="order-summary">
+                <div class="order-summary-title">
+                    <h3>ORDER SUMMARY</h3>
+                </div>
+                <div class="order-summary-details">
+                    <div id="order-subtotal">Subtotal</div>
+                    <div id="order-shipping">Shipping</div>
+                    <div id="order-tax">Tax</div>
+                </div>
+                <div class="order-summary-total">
+                    <p>Total</p>
+                </div>
+                <div class="order-summary-buttons">
+                    <button id="checkout">Proceed to Secure Checkout</button>
+                    <button id="continue-shopping">Continue Shopping</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="../js/cart_view.js"></script>
+</body>
+</html>
