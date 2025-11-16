@@ -78,4 +78,12 @@ $(document).ready(function(){
         }
         $('.order-summary-total').html(`<p>Total: $${cartTotal.toFixed(2)}`);
     }
+
+    $('.delete-product').on('click', function(){
+        const productDiv = $(this).closest('.product');
+        const productID = productDiv.data('product-id');
+        delete products[productID];
+        productDiv.remove();
+        updateCartTotal();
+    })
 })
