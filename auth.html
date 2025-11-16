@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Best Buy — Sign In / Register</title>
+  <style>
+    body { background-color:#c8f2c2; font-family: Arial, sans-serif; margin:0; }
+    h1, h2 { margin: 0.25rem 0; }
+    .wrap { max-width: 920px; margin: 32px auto; padding: 0 16px; }
+    .brand { display:flex; align-items:center; gap:12px; }
+    .card { background:#fff; border:1px solid silver; border-radius:10px; padding:20px; box-shadow:0 2px 6px rgba(0,0,0,0.06); }
+    fieldset { border:1px solid silver; border-radius:10px; }
+    legend { padding: 0 8px; font-weight:bold; }
+    table { width:100%; border-collapse: collapse; }
+    td { padding:8px; vertical-align:middle; }
+    label { font-weight:bold; }
+    input[type="text"], input[type="email"], input[type="password"], textarea {
+      width:100%; padding:10px; border:1px solid #999; border-radius:8px; font-size:14px;
+      outline:none; background:#f9fff8;
+    }
+    .actions { display:flex; gap:10px; align-items:center; }
+    button, .linklike {
+      padding:10px 14px; border:1px solid #333; border-radius:8px; background:#fff; cursor:pointer; font-weight:bold;
+      transition: transform 0.15s ease-in-out;
+    }
+    button:hover { transform: scale(1.02); }
+    .linklike { background:transparent; border:none; text-decoration:underline; }
+    .row { display:grid; grid-template-columns: 1fr 1fr; gap:24px; margin-top:16px; }
+    .muted { color:#333; font-size:14px; }
+    .error { color:#a00; }
+    .success { color:#065; }
+    .center { text-align:center; }
+    @media (max-width: 820px){ .row { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">
+      <img alt="Cart" src="https://png.pngtree.com/png-clipart/20190920/original/pngtree-shopping-cart-convenient-icon-png-image_4637407.jpg" width="48" height="48" />
+      <div>
+        <h1>Best Buy</h1>
+        <h2 class="muted">Sign In or Create Account</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="card">
+        <fieldset>
+          <legend>Login</legend>
+          <table>
+            <tr><td>Email</td><td><input id="loginEmail" type="email" required></td></tr>
+            <tr><td>Password</td><td><input id="loginPassword" type="password" minlength="8" required></td></tr>
+            <tr><td></td><td class="actions"><button id="loginBtn">Sign In</button><button id="loginClear">Clear</button></td></tr>
+          </table>
+          <p id="loginMsg" class="muted"></p>
+        </fieldset>
+      </div>
+
+      <div class="card">
+        <fieldset>
+          <legend>Register</legend>
+          <table>
+            <tr><td>Full name</td><td><input id="regName" type="text" required></td></tr>
+            <tr><td>Email</td><td><input id="regEmail" type="email" required></td></tr>
+            <tr><td>Password</td><td><input id="regPassword" type="password" minlength="8" required></td></tr>
+            <tr><td>Confirm</td><td><input id="regPassword2" type="password" minlength="8" required></td></tr>
+            <tr><td>Address</td><td><textarea id="regAddress" rows="3"></textarea></td></tr>
+            <tr><td></td><td class="actions"><button id="registerBtn">Create Account</button><button id="regClear">Clear</button></td></tr>
+          </table>
+          <p id="regMsg" class="muted"></p>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = "http://127.0.0.1:8000/api";
+
+    async function postJSON(path, body){
+      const res = await fetch(API_BASE + path, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      if(!res.ok){ throw new Error(await res.text() || 'HTTP ' + res.status); }
+      return res.json();
+    }
+
+    document.getElementById('loginBtn').addEventListener('click', async ()=>{
+      const email = loginEmail.value.trim();
+      const password = loginPassword.value;
+      const msg = loginMsg;
+      msg.textContent='';
+      try{
+        const data = await postJSON('/auth/login',{email,password});
+        msg.className='success'; msg.textContent='Logged in!';
+      }catch(e){ msg.className='error'; msg.textContent=e.message||'Login failed'; }
+    });
+    loginClear.onclick=()=>{loginEmail.value='';loginPassword.value='';loginMsg.textContent='';};
+
+    registerBtn.onclick=async()=>{
+      const name=regName.value.trim(),email=regEmail.value.trim(),pw=regPassword.value,pw2=regPassword2.value,address=regAddress.value.trim(),msg=regMsg;
+      msg.textContent='';
+      if(pw!==pw2){msg.className='error';msg.textContent='Passwords do not match';return;}
+      if(pw.length<8){msg.className='error';msg.textContent='Password too short';return;}
+      try{
+        await postJSON('/auth/register',{name,email,password:pw,address});
+        msg.className='success';msg.textContent='Account created! You can sign in now.';
+      }catch(e){msg.className='error';msg.textContent=e.message||'Registration failed';}
+    };
+    regClear.onclick=()=>{['regName','regEmail','regPassword','regPassword2','regAddress'].forEach(id=>document.getElementById(id).value='');regMsg.textContent='';};
+  </script>
+</body>
+</html>
