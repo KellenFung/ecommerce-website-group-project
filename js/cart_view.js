@@ -2,23 +2,23 @@ $(document).ready(function(){
     //This is a placeholder associative array
     //it should be returned by the backend when we get our database working
     let products = {
-        "apple": {
-            name: "Apple",
-            price: 2.00,
-            quantity: 0
+        "refridgerator": {
+            name: "refridgerator",
+            price: 500.00,
+            quantity: 1
         },
-        "banana": {
-            name: "Banana",
-            price: 1.00,
-            quantity: 0
+        "microwave": {
+            name: "microwave",
+            price: 300.00,
+            quantity: 1
         },
-        "smoothie": {
-            name: "Smoothie",
-            price: 10.00,
-            quantity: 0
+        "dishwasher": {
+            name: "dishwasher",
+            price: 450.00,
+            quantity: 1
         }
     }
-
+    updateCartTotal();
     $('.add-counter').on('click', function(){
         console.log("clicked");
         const productDiv = $(this).closest('.product');
@@ -85,5 +85,9 @@ $(document).ready(function(){
         delete products[productID];
         productDiv.remove();
         updateCartTotal();
+    })
+
+    $('#checkout').on('click', function(){
+        window.location.href='../views/checkout_view.html';
     })
 })
