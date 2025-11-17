@@ -2,18 +2,15 @@
 <html>
 <head>
   <title>E-Commerce</title>
+  <meta charset="utf-8" />
   <style>
+    /*Background color*/
     body {
       background-color: #c8f2c2;
       font-family: Arial, sans-serif;
+      margin: 0;
     }
-
-    table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-      padding: 5px;
-    }
-
+    /*Cart Button model*/
     #cartButton {
       position: fixed;
       top: 10px;
@@ -34,6 +31,7 @@
       transition: transform 0.2s ease-in-out;
     }
 
+    /*Cart Image*/
     #cartBadge {
       position: absolute;
       top: -5px;
@@ -55,13 +53,7 @@
       display: flex;
     }
 
-    button img {
-      width: 10vw;
-      height: 20vh;
-      object-fit: cover;
-    }
-
-    /* ===== Modal overlay ===== */
+    /*Modal overlay*/
     .modal {
       display: none;
       position: fixed;
@@ -85,11 +77,14 @@
       max-height: 80vh;
       overflow-y: auto;
       box-sizing: border-box;
+      position: relative;
     }
 
     .close {
       color: #aaa;
-      float: right;
+      position: absolute;
+      top: 12px;
+      right: 16px;
       font-size: 28px;
       font-weight: bold;
       cursor: pointer;
@@ -100,7 +95,7 @@
       color: black;
     }
 
-    /* ===== New cart layout (inspired by friend's cart.html) ===== */
+    /*Cart layout*/
 
     .cart-main-container{
       display: flex;
@@ -282,27 +277,167 @@
       padding: 20px;
       color: #666;
     }
+
+    /*Product items*/
+    #row1, #row2, #row3, #row4, #row5, #row6 {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      padding: 0 20px;
+    }
+
+    /*Hover overlay on each product*/
+    .product-card {
+      position: relative;
+      border: 1px solid #9ad69a;
+      padding: 2px;
+      background: #e4ffe4;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .product-card img {
+      width: 10vw;
+      height: 20vh;
+      object-fit: cover;
+      display: block;
+    }
+
+    .product-overlay {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 4px 6px;
+      background: rgba(0, 0, 0, 0.75);
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      gap: 6px;
+      transform: translateY(100%);
+      transition: transform 0.15s ease-in-out;
+    }
+
+    .product-card:hover .product-overlay {
+      transform: translateY(0);
+    }
+
+    .product-name {
+      font-weight: bold;
+      margin-right: 3px;
+    }
+
+    .product-add-btn {
+      border: 1px solid #ffd900;
+      background: #ffd900;
+      color: #000;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .product-add-btn:hover {
+      filter: brightness(0.95);
+    }
+
+    /*Product detail modal*/
+    .product-modal-content {
+      max-width: 700px;
+    }
+
+    .product-modal-body {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    #modalProductImage {
+      width: 220px;
+      height: 220px;
+      object-fit: cover;
+      border: 1px solid #ddd;
+    }
+
+    .product-modal-info h2 {
+      margin-top: 0;
+    }
+
+    .product-modal-price {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .product-modal-desc {
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .product-modal-actions {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .product-qty-input {
+      width: 60px;
+      padding: 4px;
+      text-align: center;
+    }
+
+    .checkout-btn {
+      background: #ffd900;
+      border-radius: 5px;
+      padding: 8px 16px;
+      border: 1px solid #333;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .checkout-btn:hover {
+      background: #ffcc00;
+    }
+
+    .secondary-btn {
+      background: #fff;
+      border-radius: 5px;
+      padding: 8px 16px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+
+    .secondary-btn:hover {
+      background: #f5f5f5;
+    }
   </style>
 </head>
 <body>
+  <!-- Cart button -->
   <button id="cartButton" onclick="openCart()">
     <img src="https://png.pngtree.com/png-clipart/20190920/original/pngtree-shopping-cart-convenient-icon-png-image_4637407.jpg" alt="Shopping Cart"/>
     <div id="cartBadge">0</div>
   </button>
 
-  <!-- Shopping Cart Modal -->
+  <!-- Shopping cart -->
   <div id="cartModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeCart()">&times;</span>
       <h2>Shopping Cart</h2>
 
       <div class="cart-main-container">
-        <!-- left side: products -->
+        <!-- products -->
         <div id="cartProducts" class="products_container">
           <div class="empty-message">Loading cart...</div>
         </div>
 
-        <!-- right side: order summary -->
+        <!-- order summary -->
         <div class="order-detail-container">
           <div class="order-summary">
             <div class="order-summary-title">
@@ -327,137 +462,266 @@
     </div>
   </div>
 
-  <h1>Best Buy</h1>
-  <h2>By Mahir, Kellen, Chinemerem, and Kira</h2>
-  <h3>Needs back-end support.</h3>
+  <!-- Product detail -->
+  <div id="productModal" class="modal">
+    <div class="modal-content product-modal-content">
+      <span class="close" onclick="closeProductModal()">&times;</span>
+      <div class="product-modal-body">
+        <img id="modalProductImage" src="" alt="Product image">
+        <div class="product-modal-info">
+          <h2 id="modalProductName"></h2>
+          <div class="product-modal-price" id="modalProductPrice"></div>
+          <p class="product-modal-desc">
+            High-quality item from our catalog.
+          </p>
+          <div class="product-modal-actions">
+            <label>Quantity:
+              <input id="productQty" class="product-qty-input" type="number" min="1" value="1">
+            </label>
+            <button class="checkout-btn" onclick="addCurrentProductToCart()">Add to Cart</button>
+            <button class="secondary-btn" onclick="closeProductModal()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <fieldset style="width:500px; border-color:silver">
-    <legend>Welcome to Best Buy!</legend>
-    <table>
-      <tr>
-        <td><b>Enter Fullname...</b></td>
-        <td><input type="text" name="fullname" size="40" class="input" required></td>
-      </tr>
-      <tr>
-        <td><b>Enter Address... </b></td>
-        <td><textarea name="address" id="addr" rows="5" cols="42" class="input" required></textarea></td>
-      </tr>
-      <tr>
-        <td><b> Enter Birthday... </b></td>
-        <td><input type="datetime-local" id="birthdaytime" name="birthdaytime"></td>
-      </tr>
-      <tr>
-        <td><b>Enter Add-ons...  </b></td>
-        <td>
-          <input type="checkbox" id="insurance" value="A">Insurance Policy
-          <input type="checkbox" id="parts" value="M">Replacement Parts
-          <input type="checkbox" id="warranty" value="C">Warranty Policy
-          <input type="checkbox" id="tech" value="J">Tech Support
-        </td>
-      </tr>
-      <tr>
-        <td><b>Enter Payment Method...</b></td>
-        <td>
-          <select name="holiday" id="slctSingle" class="input" style="width:160px">
-            <option value="VD">Discover</option>
-            <option value="MD">MasterCard</option>
-            <option value="FD">AmericanExpress</option>
-            <option value="HD">Visa</option>
-            <option value="CD">Paypal</option>
-          </select>
-        </td>
-      </tr>
-      <tr>
-        <td><b>Enter Appliances you want... </b></td>
-        <td>
-          <select name="flowers" id="slctMulti" size="3" multiple class="input" style="width:160px">
-            <option value="T">Kitchen Appliances</option>
-            <option value="P">Washers</option>
-            <option value="L">Dryers</option>
-            <option value="S">Computers</option>
-            <option value="O">Televisions</option>
-            <option value="D">Video Game Consoles</option>
-            <option value="R">Accessories</option>
-          </select>
-        </td>
-      </tr>
-      <tr>
-        <td><input type="submit" value="Go"></td>
-        <td><input type="reset" value="Clear"></td>
-      </tr>
-    </table>
-  </fieldset>
+  <h1 style="padding-left:20px;">E-Buy</h1>
+  <h2 style="padding-left:20px;">By Mahir, Kellen, Chinemerem, and Kira</h2>
+  <h3 style="padding-left:20px;">Click an item to view details or add it to your cart.</h3>
 
-  <h4>Prices</h4>
-  <table style="width:100%">
-    <tr><th>Item</th><th>Price</th></tr>
-    <tr><td>Refrigerator</td><td>$500</td></tr>
-    <tr><td>Microwave</td><td>$300</td></tr>
-    <tr><td>Dishwasher</td><td>$450</td></tr>
-    <tr><td>Oven</td><td>$550</td></tr>
-    <tr><td>Washer</td><td>$600</td></tr>
-    <tr><td>Dryer</td><td>$600</td></tr>
-    <tr><td>Blender</td><td>$100</td></tr>
-    <tr><td>Drip Coffee</td><td>$150</td></tr>
-    <tr><td>Laptop</td><td>$200</td></tr>
-    <tr><td>TV</td><td>$399</td></tr>
-    <tr><td>Speakers</td><td>$199</td></tr>
-    <tr><td>Vinyl</td><td>$50</td></tr>
-    <tr><td>Switch 2</td><td>$499</td></tr>
-    <tr><td>PlayStation 5</td><td>$599</td></tr>
-    <tr><td>Xbox Series S</td><td>$399</td></tr>
-    <tr><td>Gameboy</td><td>$1</td></tr>
-    <tr><td>Headphones</td><td>$49</td></tr>
-    <tr><td>Tablet</td><td>$299</td></tr>
-    <tr><td>Gaming Desktop</td><td>$999</td></tr>
-    <tr><td>Printer</td><td>$230</td></tr>
-    <tr><td>Computer Monitor</td><td>$750</td></tr>
-    <tr><td>Camera</td><td>$700</td></tr>
-    <tr><td>Smart Watch</td><td>$299</td></tr>
-    <tr><td>Vacuum</td><td>$100</td></tr>
-  </table>
-
-  <!-- product image grid (unchanged) -->
+  <!-- the products with hover titles -->
   <div id="row1">
-    <button onclick="myItem('Refrigerator')"><img src="https://zlinekitchen.com/cdn/shop/products/zline--french--door--stainless--steel--standard--depth--refrigerator--RSM-W-36--side.jpg?v=1722276759&width=1946"></button>
-    <button onclick="myItem('Microwave')"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6577/6577280_sd.jpg"></button>
-    <button onclick="myItem('Dishwasher')"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/28f0ed55-0925-4cf5-92a1-cd8e15b2e4c3.jpg"></button>
-    <button onclick="myItem('Oven')"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6401/6401963_sd.jpg"></button>
+    <div class="product-card" data-id="Refrigerator" data-name="Refrigerator" data-price="500">
+      <img src="https://zlinekitchen.com/cdn/shop/products/zline--french--door--stainless--steel--standard--depth--refrigerator--RSM-W-36--side.jpg?v=1722276759&width=1946">
+      <div class="product-overlay">
+        <span class="product-name">Refrigerator</span>
+        <span>$500</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Refrigerator',1);">Add</button>
+      </div>
+    </div>
+
+    <div class="product-card" data-id="Microwave" data-name="Microwave" data-price="300">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6577/6577280_sd.jpg">
+      <div class="product-overlay">
+        <span class="product-name">Microwave</span>
+        <span>$300</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Microwave',1);">Add</button>
+      </div>
+    </div>
+
+    <div class="product-card" data-id="Dishwasher" data-name="Dishwasher" data-price="450">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/28f0ed55-0925-4cf5-92a1-cd8e15b2e4c3.jpg">
+      <div class="product-overlay">
+        <span class="product-name">Dishwasher</span>
+        <span>$450</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Dishwasher',1);">Add</button>
+      </div>
+    </div>
+
+    <div class="product-card" data-id="Oven" data-name="Oven" data-price="550">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6401/6401963_sd.jpg">
+      <div class="product-overlay">
+        <span class="product-name">Oven</span>
+        <span>$550</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Oven',1);">Add</button>
+      </div>
+    </div>
   </div>
   <br>
+
   <div id="row2">
-    <button onclick="myItem('Washer')"><img src="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRHFP8zaZVxIWcSWSVep64sTKkNXpAUwjc1r-JWgSiIzJec9AgcXtD14uslJUbgiucfnOhAmOkk44xkEKsKSMy_WHA9SAY4XXaflYq8lY1uWl7Wiy_1T6ktrIrGudNit0ONXFR5PDuJX9s&usqp=CAc"></button>
-    <button onclick="myItem('Dryer')"><img src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTxzQsvZ5-0y3nx6SmTdPYKqHtnKtUoNMSj27WSABnLIHa0S5rUf3alGypWsHDaEbFhLNdhJOa0uz023MbufcB7e1CImjm-e1jw7hnxunPdJBvaYymoL6uTNEZqUroAiYtVF1jd340dP4I&usqp=CAc"></button>
-    <button onclick="myItem('Blender')"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6395/6395884_sd.jpg;maxHeight=1920;maxWidth=900?format=webp"></button>
-    <button onclick="myItem('DripCoffee')"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6553/6553385_sd.jpg;maxHeight=1920;maxWidth=900?format=webp"></button>
+    <div class="product-card" data-id="Washer" data-name="Washer" data-price="600">
+      <img src="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRHFP8zaZVxIWcSWSVep64sTKkNXpAUwjc1r-JWgSiIzJec9AgcXtD14uslJUbgiucfnOhAmOkk44xkEKsKSMy_WHA9SAY4XXaflYq8lY1uWl7Wiy_1T6ktrIrGudNit0ONXFR5PDuJX9s&usqp=CAc">
+      <div class="product-overlay">
+        <span class="product-name">Washer</span>
+        <span>$600</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Washer',1);">Add</button>
+      </div>
+    </div>
+
+    <div class="product-card" data-id="Dryer" data-name="Dryer" data-price="600">
+      <img src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTxzQsvZ5-0y3nx6SmTdPYKqHtnKtUoNMSj27WSABnLIHa0S5rUf3alGypWsHDaEbFhLNdhJOa0uz023MbufcB7e1CImjm-e1jw7hnxunPdJBvaYymoL6uTNEZqUroAiYtVF1jd340dP4I&usqp=CAc">
+      <div class="product-overlay">
+        <span class="product-name">Dryer</span>
+        <span>$600</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Dryer',1);">Add</button>
+      </div>
+    </div>
+
+    <div class="product-card" data-id="Blender" data-name="Blender" data-price="100">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6395/6395884_sd.jpg">
+      <div class="product-overlay">
+        <span class="product-name">Blender</span>
+        <span>$100</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Blender',1);">Add</button>
+      </div>
+    </div>
+
+    <div class="product-card" data-id="DripCoffee" data-name="Drip Coffee" data-price="150">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6553/6553385_sd.jpg">
+      <div class="product-overlay">
+        <span class="product-name">Drip Coffee</span>
+        <span>$150</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('DripCoffee',1);">Add</button>
+      </div>
+    </div>
   </div>
   <br>
+
   <div id="row3">
-    <button onclick="myItem('Laptop')"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/189f8d5b-03fe-4d49-aa2b-552018e1c819.jpg;maxHeight=1920;maxWidth=900?format=webp"></button>
-    <button onclick="myItem('TV')"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/0343bc5e-db43-4664-8ef1-8a7255eae875.jpg;maxHeight=1920;maxWidth=900?format=webp"></button>
-    <button onclick="myItem('Speaker')"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/db2aafd7-3ca3-48e3-a7fe-36714093bf8c.jpg;maxHeight=1920;maxWidth=900?format=webp"></button>
-    <button onclick="myItem('OutDatedVinyl')"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/a495cade-d7b5-4eb8-a36f-c378d3c29ec9.jpg;maxHeight=1920;maxWidth=900?format=webp"></button>
+    <div class="product-card" data-id="Laptop" data-name="Laptop" data-price="200">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/189f8d5b-03fe-4d49-aa2b-552018e1c819.jpg">
+      <div class="product-overlay">
+        <span class="product-name">Laptop</span>
+        <span>$200</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Laptop',1);">Add</button>
+      </div>
+    </div>
+
+    <div class="product-card" data-id="TV" data-name="TV" data-price="399">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/0343bc5e-db43-4664-8ef1-8a7255eae875.jpg">
+      <div class="product-overlay">
+        <span class="product-name">TV</span>
+        <span>$399</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('TV',1);">Add</button>
+      </div>
+    </div>
+
+    <div class="product-card" data-id="Speaker" data-name="Speakers" data-price="199">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/db2aafd7-3ca3-48e3-a7fe-36714093bf8c.jpg">
+      <div class="product-overlay">
+        <span class="product-name">Speakers</span>
+        <span>$199</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Speaker',1);">Add</button>
+      </div>
+    </div>
+
+    <div class="product-card" data-id="OutDatedVinyl" data-name="Vinyl" data-price="50">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/a495cade-d7b5-4eb8-a36f-c378d3c29ec9.jpg">
+      <div class="product-overlay">
+        <span class="product-name">Vinyl</span>
+        <span>$50</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('OutDatedVinyl',1);">Add</button>
+      </div>
+    </div>
   </div>
   <br>
+
   <div id="row4">
-    <button onclick="myItem('Switch2')"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/2d2b885d-0b91-4a0a-b8e0-247fd2b26ab7.jpg;maxHeight=1920;maxWidth=900?format=webp"></button>
-    <button onclick="myItem('PlayStation5')"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6601/6601524_sd.jpg;maxHeight=1920;maxWidth=900?format=webp"></button>
-    <button onclick="myItem('XboxS')"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6470/6470289_sd.jpg;maxHeight=1920;maxWidth=900?format=webp"></button>
-    <button onclick="myItem('OutDatedGameBoy')"><img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Game-Boy-FL.png"></button>
+    <div class="product-card" data-id="Switch2" data-name="Switch 2" data-price="499">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/2d2b885d-0b91-4a0a-b8e0-247fd2b26ab7.jpg">
+      <div class="product-overlay">
+        <span class="product-name">Switch 2</span>
+        <span>$499</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Switch2',1);">Add</button>
+      </div>
+    </div>
+
+    <div class="product-card" data-id="PlayStation5" data-name="PlayStation 5" data-price="599">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6601/6601524_sd.jpg">
+      <div class="product-overlay">
+        <span class="product-name">PlayStation 5</span>
+        <span>$599</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('PlayStation5',1);">Add</button>
+      </div>
+    </div>
+
+    <div class="product-card" data-id="XboxS" data-name="Xbox Series S" data-price="399">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6470/6470289_sd.jpg">
+      <div class="product-overlay">
+        <span class="product-name">Xbox Series S</span>
+        <span>$399</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('XboxS',1);">Add</button>
+      </div>
+    </div>
+
+    <div class="product-card" data-id="OutDatedGameBoy" data-name="Gameboy" data-price="1">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Game-Boy-FL.png">
+      <div class="product-overlay">
+        <span class="product-name">Gameboy</span>
+        <span>$1</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('OutDatedGameBoy',1);">Add</button>
+      </div>
+    </div>
   </div>
   <br>
+
   <div id="row5">
-    <button onclick="myItem('Headphones')"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/4c7591bb-84b4-4697-b3a7-91ba2d6c83fa.jpg;maxHeight=1920;maxWidth=900?format=webp"></button>
-    <button onclick="myItem('IPad')"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/2a76c272-cd12-43b9-ace9-34df9942ddd6.jpg;maxHeight=1920;maxWidth=900?format=webp"></button>
-    <button onclick="myItem('GamingDesktop')"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/08c4770e-4f55-494e-a8ed-6604c87bef73.jpg;maxHeight=1920;maxWidth=900?format=webp"></button>
-    <button onclick="myItem('Printer')"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/02d42d73-c9c2-4f3a-a964-6d7d37a9f574.jpg;maxHeight=1920;maxWidth=900?format=webp"></button>
+    <div class="product-card" data-id="Headphones" data-name="Headphones" data-price="49">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/4c7591bb-84b4-4697-b3a7-91ba2d6c83fa.jpg">
+      <div class="product-overlay">
+        <span class="product-name">Headphones</span>
+        <span>$49</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Headphones',1);">Add</button>
+      </div>
+    </div>
+
+    <div class="product-card" data-id="IPad" data-name="Tablet" data-price="299">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/2a76c272-cd12-43b9-ace9-34df9942ddd6.jpg">
+      <div class="product-overlay">
+        <span class="product-name">Tablet</span>
+        <span>$299</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('IPad',1);">Add</button>
+      </div>
+    </div>
+
+    <div class="product-card" data-id="GamingDesktop" data-name="Gaming Desktop" data-price="999">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/08c4770e-4f55-494e-a8ed-6604c87bef73.jpg">
+      <div class="product-overlay">
+        <span class="product-name">Gaming Desktop</span>
+        <span>$999</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('GamingDesktop',1);">Add</button>
+      </div>
+    </div>
+
+    <div class="product-card" data-id="Printer" data-name="Printer" data-price="230">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/02d42d73-c9c2-4f3a-a964-6d7d37a9f574.jpg">
+      <div class="product-overlay">
+        <span class="product-name">Printer</span>
+        <span>$230</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Printer',1);">Add</button>
+      </div>
+    </div>
   </div>
   <br>
+
   <div id="row6">
-    <button onclick="myItem('Monitor')"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6208cafc-fd04-4b29-89a5-4b431fde8df7.jpg;maxHeight=1920;maxWidth=900?format=webp"></button>
-    <button onclick="myItem('Camera')"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6536/6536336_sd.jpg;maxHeight=1920;maxWidth=900?format=webp"></button>
-    <button onclick="myItem('SmartWatch')"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/9ac5d1ec-3b32-4adb-a2f5-adc8b3c047e9.jpg;maxHeight=1920;maxWidth=900?format=webp"></button>
-    <button onclick="myItem('Vaccum')"><img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/30d1d685-9631-4dcb-b24a-27211cc47de2.jpg;maxHeight=1920;maxWidth=900?format=webp"></button>
+    <div class="product-card" data-id="Monitor" data-name="Computer Monitor" data-price="750">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6208cafc-fd04-4b29-89a5-4b431fde8df7.jpg">
+      <div class="product-overlay">
+        <span class="product-name">Computer Monitor</span>
+        <span>$750</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Monitor',1);">Add</button>
+      </div>
+    </div>
+
+    <div class="product-card" data-id="Camera" data-name="Camera" data-price="700">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6536/6536336_sd.jpg">
+      <div class="product-overlay">
+        <span class="product-name">Camera</span>
+        <span>$700</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Camera',1);">Add</button>
+      </div>
+    </div>
+
+    <div class="product-card" data-id="SmartWatch" data-name="Smart Watch" data-price="299">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/9ac5d1ec-3b32-4adb-a2f5-adc8b3c047e9.jpg">
+      <div class="product-overlay">
+        <span class="product-name">Smart Watch</span>
+        <span>$299</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('SmartWatch',1);">Add</button>
+      </div>
+    </div>
+
+    <div class="product-card" data-id="Vaccum" data-name="Vacuum" data-price="100">
+      <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/30d1d685-9631-4dcb-b24a-27211cc47de2.jpg">
+      <div class="product-overlay">
+        <span class="product-name">Vacuum</span>
+        <span>$100</span>
+        <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Vaccum',1);">Add</button>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -470,7 +734,7 @@
       return res.json();
     }
 
-    // Map productId -> image URL (optional, you can tweak these)
+    // Product images 
     const productImages = {
       Refrigerator: "https://zlinekitchen.com/cdn/shop/products/zline--french--door--stainless--steel--standard--depth--refrigerator--RSM-W-36--side.jpg?v=1722276759&width=1946",
       Microwave: "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6577/6577280_sd.jpg",
@@ -498,7 +762,7 @@
       Vaccum: "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/30d1d685-9631-4dcb-b24a-27211cc47de2.jpg"
     };
 
-    // badge
+    // update cart image
     async function updateCartBadge() {
       try {
         const cart = await api("/cart");
@@ -644,7 +908,7 @@
     }
 
     function updateSummary(subtotal) {
-      const shipping = subtotal > 0 ? 0 : 0; 
+      const shipping = subtotal > 0 ? 0 : 0;
       const taxRate = 0.08;
       const tax = Math.round(subtotal * taxRate * 100) / 100;
       const total = subtotal + shipping + tax;
@@ -665,19 +929,62 @@
       document.getElementById("cartModal").style.display = "none";
     }
 
+    // product detail modal state
+    let currentProductId = null;
+
+    function setupProductCards() {
+      const cards = document.querySelectorAll(".product-card");
+      cards.forEach(card => {
+        card.addEventListener("click", () => {
+          const id = card.dataset.id;
+          const name = card.dataset.name;
+          const price = card.dataset.price;
+          const img = card.querySelector("img").src;
+          openProductModal({ id, name, price, img });
+        });
+      });
+    }
+
+    function openProductModal(product) {
+      currentProductId = product.id;
+
+      document.getElementById("modalProductName").textContent = product.name;
+      document.getElementById("modalProductPrice").textContent = "$" + product.price;
+      document.getElementById("modalProductImage").src =
+        product.img || productImages[product.id] || "https://via.placeholder.com/220?text=Item";
+      document.getElementById("productQty").value = 1;
+
+      document.getElementById("productModal").style.display = "block";
+    }
+
+    function closeProductModal() {
+      document.getElementById("productModal").style.display = "none";
+    }
+
+    async function addCurrentProductToCart() {
+      const qty = parseInt(document.getElementById("productQty").value) || 1;
+      if (!currentProductId) return;
+      await myItem(currentProductId, qty);
+      closeProductModal();
+    }
+
     window.onclick = function(event) {
-      const modal = document.getElementById("cartModal");
-      if (event.target === modal) {
+      const cartModal = document.getElementById("cartModal");
+      const productModal = document.getElementById("productModal");
+      if (event.target === cartModal) {
         closeCart();
+      }
+      if (event.target === productModal) {
+        closeProductModal();
       }
     };
 
-    // Add item to cart from product grid
-    async function myItem(itemName) {
+    // Add item to cart from product list
+    async function myItem(itemName, qty = 1) {
       try {
         await api("/cart/items", {
           method: "POST",
-          body: JSON.stringify({ productId: itemName, qty: 1 })
+          body: JSON.stringify({ productId: itemName, qty: qty })
         });
         alert(itemName + " added to cart");
         await updateCartBadge();
@@ -686,7 +993,7 @@
       }
     }
 
-    // Checkout using existing backend
+    // Checkout 
     async function checkout() {
       try {
         const order = await api("/orders", { method: "POST" });
@@ -702,8 +1009,9 @@
       }
     }
 
-    // init badge
+    // init
     updateCartBadge();
+    setupProductCards();
   </script>
 </body>
 </html>
