@@ -1,0 +1,223 @@
+body {
+  background-color: #c8f2c2;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2 {
+  margin: 0.25rem 0;
+}
+
+.wrap {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.brand img {
+  border-radius: 8px;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+legend {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  background: #fafafa;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+  border-color: rgb(33, 33, 104);
+  box-shadow: 0 0 0 3px rgba(33, 33, 104, 0.1);
+  background: #fff;
+}
+
+textarea {
+  resize: vertical;
+  font-family: Arial, sans-serif;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+button {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.btn-primary {
+  background-color: rgb(6, 63, 15);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: rgb(6, 63, 15);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(6, 63, 15, 0.3);
+}
+
+.btn-secondary {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.btn-secondary:hover {
+  background-color: #d0d0d0;
+}
+
+.register-prompt {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+  text-align: center;
+}
+
+.register-prompt p {
+  margin: 0 0 10px 0;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.create-account-link {
+  display: inline-block;
+  color: rgb(33, 33, 104);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.3s;
+}
+
+.create-account-link:hover {
+  background-color: rgba(33, 33, 104, 0.1);
+  text-decoration: underline;
+}
+
+.muted {
+  color: #666;
+  font-size: 14px;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.error {
+  color: #d32f2f;
+  font-weight: 600;
+}
+
+.success {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+/* Field Error Styles - NEW */
+.field-error {
+  display: block;
+  color: #d32f2f;
+  font-size: 0.85rem;
+  margin-top: 5px;
+  min-height: 20px;
+  font-weight: 500;
+}
+
+.form-group input.error,
+.form-group textarea.error {
+  border-color: #d32f2f;
+  background-color: #fff5f5;
+}
+
+.form-group input.error:focus,
+.form-group textarea.error:focus {
+  border-color: #d32f2f;
+  box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .wrap {
+    max-width: 100%;
+    margin: 20px auto;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  button {
+    width: 100%;
+  }
+}
