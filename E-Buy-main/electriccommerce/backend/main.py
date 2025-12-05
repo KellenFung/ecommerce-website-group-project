@@ -26,7 +26,7 @@ DB_CONFIG = {
     "user": os.environ.get("MYSQLUSER", "ebuy_user"),
     "password": os.environ.get("MYSQLPASSWORD", "Software5432"),
     "database": os.environ.get("MYSQLDATABASE", "ebuy_app"),
-    "port": int(os.environ.get("MYSQLPORT", "3306")),
+    "port": int(os.environ.get("MYSQLPORT", 3306)),
 }
 
 pool = pooling.MySQLConnectionPool(
@@ -424,4 +424,5 @@ register_payment_routes(app, pool, JWT_SECRET, PAYMENT_ENCRYPTION_KEY)
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     app.run(host="0.0.0.0", port=port, debug=True)
+
 
