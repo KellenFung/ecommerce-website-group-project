@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Payment Methods</title>
+    <link rel="stylesheet" href="../styles/paymentsystem.css" type="text/css" />
+</head>
+<body>
+    <div id="main-container">
+        <div id="submain-container">
+
+            <!-- Breadcrumb -->
+            <div id="path-row">
+                <a href="./main.html">E-Buy</a>
+                <span>&gt;</span>
+                <a href="./dashboard.html">Your Account</a>
+                <span>&gt;</span>
+                <span>Payment Methods</span>
+            </div>
+
+            <h1 id="page-title">Payment Methods</h1>
+
+            <div id="content-row">
+
+                <!-- FIRST: Add / edit form (checkout-style grey card, centered) -->
+                <section id="payment-form-card">
+                    <h2 id="form-title" class="section-title">Add a New Card</h2>
+
+                    <form id="payment-form" novalidate>
+                        <!-- hidden id used when editing -->
+                        <input type="hidden" id="payment-id" />
+
+                        <div class="form-row">
+                            <label for="cardType">Card Type</label>
+                            <select id="cardType" name="cardType">
+                                <option value="">Select card type</option>
+                                <option value="Visa">Visa</option>
+                                <option value="Mastercard">Mastercard</option>
+                                <option value="Amex">American Express</option>
+                                <option value="Discover">Discover</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <div id="cardTypeError" class="field-error"></div>
+                        </div>
+
+                        <div class="form-row">
+                            <label for="cardholderName">Cardholder Name</label>
+                            <input type="text" id="cardholderName" name="cardholderName" placeholder="Name on card" />
+                            <div id="cardholderError" class="field-error"></div>
+                        </div>
+
+                        <div class="form-row">
+                            <label for="cardNumber">Card Number</label>
+                            <input type="text" id="cardNumber" name="cardNumber" placeholder="Enter credit card number" autocomplete="off" />
+                            <div id="cardNumberError" class="field-error"></div>
+                        </div>
+
+                        <div class="form-row two-cols">
+                            <div class="col">
+                                <label for="expiryDate">Expiration</label>
+                                <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" />
+                                <div id="expiryError" class="field-error"></div>
+                            </div>
+                            <div class="col">
+                                <label for="cvv">CVV</label>
+                                <!-- CVV is visible, not password -->
+                                <input type="text" id="cvv" name="cvv" placeholder="CVV" autocomplete="off" />
+                                <div id="cvvError" class="field-error"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label for="billingZip">Billing ZIP / Postal Code</label>
+                            <input type="text" id="billingZip" name="billingZip" placeholder="ZIP / Postal code" />
+                            <div id="zipError" class="field-error"></div>
+                        </div>
+
+                        <div class="form-row checkbox-row">
+                            <input type="checkbox" id="isDefault" name="isDefault" />
+                            <label for="isDefault">Make this my default card</label>
+                        </div>
+
+                        <div id="form-error" class="form-message error hidden"></div>
+                        <div id="form-success" class="form-message success hidden"></div>
+
+                        <div class="form-actions-row">
+                            <button type="submit" id="submit-btn">Save Payment Method</button>
+                            <button type="button" id="cancel-btn" class="secondary-btn" style="display:none;">Cancel</button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- SECOND: Saved methods list (under the form) -->
+                <section id="saved-methods">
+                    <h2 class="section-title">Saved Cards</h2>
+                    <p id="saved-help">
+                        These cards are securely stored and can be used at checkout.
+                    </p>
+
+                    <div id="methods-list">
+                        <!-- Filled dynamically by JS -->
+                    </div>
+
+                    <div id="no-methods" class="hidden">
+                        You don’t have any saved cards yet. Add one using the form above.
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Use whatever filename you are actually using on disk -->
+    <script src="../js/paymentsystem.js"></script>
+</body>
+</html>

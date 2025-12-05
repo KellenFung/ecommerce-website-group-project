@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Checkout</title>
+    <link rel="stylesheet" href="../styles/checkout.css" />
+</head>
+<body>
+    <div id="main-container">
+        <div id="checkout-title">
+            <h2>Preparing your order</h2>
+        </div>
+        <div id="checkout-container">
+            <div id="shipping-info">
+                <div id="shipping-sub-title">
+                    SHIPPING INFORMATION
+                </div>
+                <div id="name-line">
+                    <div id="first-name-box">
+                        <div class="input-label">First Name</div>
+                        <input type="text" id="first-name" placeholder="Enter first name"/>
+                    </div>
+                    <div id="last-name-box">
+                        <div class="input-label">Last Name</div>
+                        <input type="text" id="last-name" placeholder="Enter last name"/>
+                    </div>
+                </div>
+                <div id="address-line">
+                    <div class="input-label">Address</div>
+                    <input type="text" id="address" class="full-line" placeholder="House Number, Street name, City, State, Country"/>
+                </div>
+                <div id="phone-line">
+                    <div class="input-label">Phone Number</div>
+                    <input type="text" id="phone-number" class="full-line" placeholder="Enter phone number"/>
+                </div>
+                <div id="email-line">
+                    <div class="input-label">Email Address</div>
+                    <input type="email" id="email" class="full-line" placeholder="Enter email address"/>
+                </div>
+            </div>
+            <div id="payment-info">
+                <div id="payment-info-title">
+                    Your Order
+                </div>
+                <div id="order-summary">
+
+                </div>
+                <div id="order-calculations">
+
+                </div>
+                <div id="card-info-field">
+                    <div id="card-line">
+                        <div class="card-input-label">Card Number</div>
+                        <input type="text" id="card-number" class="full-line" placeholder="Enter credit card number"/>
+                    </div>
+                    <div id="exp-date-cvv-line">
+                        <div id="exp-date-box">
+                            <div class="card-input-label">Expiration</div>
+                            <input type="text" id="card-expiration" placeholder="MM/YY"/>
+                        </div>
+                        <div id="cvv-date-box">
+                            <div class="card-input-label">CVV</div>
+                            <input type="text" id="card-cvv" placeholder="CVV"/>
+                        </div>
+                    </div>
+                </div>
+                <div id="submit-order">
+                    <button id="place-order">Place Order</button>
+                    <button id="exit-checkout" onclick="window.location.href='main.html'">
+                        Continue Shopping
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="../js/api.js"></script>
+    <script type="text/javascript" src="../js/checkout.js"></script>
+</body>
+</html>

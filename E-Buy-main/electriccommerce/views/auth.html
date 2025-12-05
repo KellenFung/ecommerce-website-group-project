@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E-Buy — Sign In / Register</title>
+  <link rel="stylesheet" href="../styles/auth.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">
+      <img alt="Cart" src="https://png.pngtree.com/png-clipart/20190920/original/pngtree-shopping-cart-convenient-icon-png-image_4637407.jpg" width="48" height="48" />
+      <div>
+        <h1>E-Buy</h1>
+        <h2 class="muted">Sign In or Create Account</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="card">
+        <fieldset>
+          <legend>Login</legend>
+          <table>
+            <tr>
+              <td>Email</td>
+              <td><input id="loginEmail" type="email" required></td>
+            </tr>
+            <tr>
+              <td>Password</td>
+              <td><input id="loginPassword" type="password" minlength="8" required></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="actions">
+                <button id="loginBtn">Sign In</button>
+                <button id="loginClear">Clear</button>
+              </td>
+            </tr>
+          </table>
+          <p id="loginMsg" class="muted"></p>
+        </fieldset>
+      </div>
+
+      <div class="card">
+        <fieldset>
+          <legend>Register</legend>
+          <table>
+            <tr>
+              <td>Full name</td>
+              <td><input id="regName" type="text" required></td>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td><input id="regEmail" type="email" required></td>
+            </tr>
+            <tr>
+              <td>Password</td>
+              <td><input id="regPassword" type="password" minlength="8" required></td>
+            </tr>
+            <tr>
+              <td>Confirm</td>
+              <td><input id="regPassword2" type="password" minlength="8" required></td>
+            </tr>
+            <tr>
+              <td>Address</td>
+              <td><textarea id="regAddress" rows="3"></textarea></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="actions">
+                <button id="registerBtn">Create Account</button>
+                <button id="regClear">Clear</button>
+              </td>
+            </tr>
+          </table>
+          <p id="regMsg" class="muted"></p>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+</body>
+</html>

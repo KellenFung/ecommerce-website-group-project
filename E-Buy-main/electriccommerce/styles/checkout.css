@@ -1,0 +1,128 @@
+/* body{
+    background-color: #F5F5F5;
+} */
+
+#checkout-container{
+    display: flex;
+    flex-direction: row;
+    gap: 75px;
+    width: fit-content;
+    height: fit-content;
+}
+
+#shipping-info{
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 18px;
+    font-size: 18px;
+    background-color: white;
+}
+
+#shipping-sub-title{
+    font-weight: 700;
+}
+
+#name-line{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+#shipping-info input{
+    font-size: 18px;
+    border: 1px gray solid;
+    border-radius: 5px;
+    padding: 8px;
+}
+
+input:focus{ /*check again*/
+    border: 2px black solid;
+}
+
+.full-line{
+    width: 97%;
+}
+
+#payment-info{
+    padding: 10px;
+    background-color: #F5F5F5;
+}
+
+#payment-info-title{
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+#order-summary{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#order-calculations{
+    border-top: 1px gray solid;
+    margin-top: 15px;
+    padding: 5px;
+    font-weight: 600;
+}
+
+#card-info-field{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#card-info-field input{
+    font-size: 18px;
+    border: 1px gray solid;
+    padding: 8px;
+}
+
+#exp-date-cvv-line{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
+
+#exp-date-cvv-line input{
+    width: 150px;
+}
+
+#submit-order{
+    margin-top: 28px;
+}
+
+#place-order{
+    width: 97%;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: darkorange;
+}
+
+#place-order:hover{
+    cursor: pointer;
+}
+
+#exit-checkout {
+    width: 97%;
+    font-size: 18px;
+    font-weight: 600;
+    color: #444;
+    padding: 10px;
+    border-radius: 15px;
+    border: 2px solid #aaa;
+    background-color: white;
+    margin-top: 10px;
+}
+
+#exit-checkout:hover {
+    cursor: pointer;
+    background-color: #f0f0f0;
+}

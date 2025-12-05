@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E-Buy — Create Account</title>
+  <link rel="stylesheet" href="../styles/auth.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">
+      <img alt="Cart"
+           src="https://png.pngtree.com/png-clipart/20190920/original/pngtree-shopping-cart-convenient-icon-png-image_4637407.jpg"
+           width="48" height="48" />
+      <div>
+        <h1>E-Buy</h1>
+        <h2 class="muted">Create Your Account</h2>
+      </div>
+    </div>
+
+    <div class="center-container">
+      <div class="card">
+        <fieldset>
+          <legend>Register</legend>
+          <form id="registerForm" novalidate>
+            <!-- First Name -->
+            <div class="form-group">
+              <label for="regFirstName">First Name</label>
+              <input id="regFirstName" type="text" placeholder="Enter first name" required>
+              <span class="field-error" id="firstNameError"></span>
+            </div>
+
+            <!-- Last Name -->
+            <div class="form-group">
+              <label for="regLastName">Last Name</label>
+              <input id="regLastName" type="text" placeholder="Enter last name" required>
+              <span class="field-error" id="lastNameError"></span>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+              <label for="regEmail">Email</label>
+              <input id="regEmail" type="email" placeholder="Enter email" required>
+              <span class="field-error" id="emailError"></span>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+              <label for="regPassword">Password</label>
+              <input id="regPassword" type="password"
+                     placeholder="Enter password" minlength="8" required>
+              <span class="field-error" id="passwordError"></span>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+              <label for="regPassword2">Confirm Password</label>
+              <input id="regPassword2" type="password"
+                     placeholder="Re-enter password" minlength="8" required>
+              <span class="field-error" id="password2Error"></span>
+            </div>
+
+            <!-- Address (optional) -->
+            <div class="form-group">
+              <label for="regAddress">Address (Optional)</label>
+              <textarea id="regAddress" rows="3"
+                        placeholder="123 Main Street, City, State, ZIP"></textarea>
+            </div>
+
+            <div class="actions">
+              <button type="submit" id="registerBtn" class="btn-primary">Create Account</button>
+              <button type="button" id="regClear" class="btn-secondary">Clear</button>
+            </div>
+
+            <p id="regMsg" class="muted"></p>
+          </form>
+        </fieldset>
+
+        <div class="register-prompt">
+          <p>Already have an account?</p>
+          <a href="loginauth.html" class="create-account-link">Sign in here</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/registerauth.js"></script>
+</body>
+</html>

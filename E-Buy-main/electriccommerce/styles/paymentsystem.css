@@ -1,0 +1,294 @@
+/* Overall layout (matches other account pages) */
+#main-container {
+    display: flex;
+    flex-direction: column;
+    font-family: "Times New Roman", Georgia, serif;
+}
+
+#submain-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px 40px;
+}
+
+/* Breadcrumb */
+#path-row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    font-size: 18px;
+}
+
+#path-row a {
+    text-decoration: none;
+    color: black;
+}
+
+#path-row a:hover {
+    text-decoration: underline;
+}
+
+#page-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 5px;
+}
+
+/* Content: stack vertically and center, like checkout/login cards */
+#content-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin-top: 10px;
+}
+
+/* Common width for the grey card + saved cards */
+#payment-form-card,
+#saved-methods {
+    width: 500px;
+}
+
+/* Saved methods list (now under the form) */
+.section-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+#saved-help {
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+#methods-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.method-card,
+.payment-card {
+    position: relative;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+}
+
+.payment-card.default {
+    border-color: #f5a623;
+    box-shadow: 0 0 0 2px rgba(245, 166, 35, 0.25);
+}
+
+.method-main,
+.payment-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.method-line,
+.card-details {
+    font-size: 16px;
+}
+
+.method-line.small {
+    font-size: 13px;
+    color: #555555;
+}
+
+.card-type {
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+.card-last4 {
+    font-family: "Courier New", monospace;
+}
+
+.method-actions,
+.payment-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-left: 16px;
+}
+
+.small-btn {
+    padding: 4px 10px;
+    font-size: 13px;
+    border-radius: 14px;
+    border: 1px solid #333333;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+.small-btn.primary {
+    background-color: #ffe08a;
+}
+
+.small-btn.danger {
+    border-color: #aa0000;
+    color: #aa0000;
+}
+
+.small-btn:hover {
+    filter: brightness(0.95);
+}
+
+.default-badge {
+    position: absolute;
+    top: -8px;
+    left: 12px;
+    font-size: 11px;
+    background-color: #f5a623;
+    color: white;
+    padding: 1px 6px;
+    border-radius: 10px;
+}
+
+#no-methods {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Right: grey card, checkout-style */
+#payment-form-card {
+    background-color: #f5f5f5;
+    border: 1px solid #dddddd;
+    border-radius: 6px;
+    padding: 18px 22px;
+}
+
+#payment-form {
+    margin-top: 8px;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.form-row label {
+    font-size: 15px;
+    margin-bottom: 3px;
+}
+
+.form-row input,
+.form-row select {
+    font-size: 16px;
+    padding: 6px;
+    border: 1px solid #bbbbbb;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+/* Error state: red border only (no solid red background) */
+.form-row input.error,
+.form-row select.error {
+    border-color: #b00000;
+}
+
+/* Inline error text under each field */
+.field-error {
+    font-size: 13px;
+    color: #b00000;
+    margin-top: 3px;
+    font-family: "Times New Roman", Georgia, serif;
+}
+
+/* Row with Expiration / CVV */
+.form-row.two-cols {
+    flex-direction: row;
+    gap: 10px;
+}
+
+.form-row.two-cols .col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Checkbox row */
+.checkbox-row {
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.checkbox-row input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}
+
+/* Messages */
+.form-message {
+    font-size: 14px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.form-message.error {
+    color: #b00000;
+}
+
+.form-message.success {
+    color: #006400;
+}
+
+/* Buttons row */
+.form-actions-row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Big blue button like your screenshot */
+#submit-btn {
+    flex: 1;
+    padding: 10px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 25px;
+    border: 1px solid #101a87;
+    background-color: #1625c7;
+    color: white;
+    cursor: pointer;
+}
+
+#submit-btn:hover {
+    filter: brightness(0.95);
+}
+
+/* Cancel button used when editing */
+.secondary-btn {
+    padding: 10px 18px;
+    font-size: 16px;
+    border-radius: 25px;
+    border: 1px solid #bbbbbb;
+    background-color: #f3f3f3;
+    cursor: pointer;
+}
+
+/* Helpers */
+.hidden {
+    display: none;
+}
+
+/* On narrow screens */
+@media (max-width: 900px) {
+    #content-row {
+        flex-direction: column;
+        align-items: center;
+    }
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Order History</title>
+    <link rel="stylesheet" href="../styles/orderhistory.css" type="text/css" />
+</head>
+<body>
+    <div id="main-container">
+        <div id="submain-container">
+
+            <!-- Breadcrumb -->
+            <div id="path-row">
+                <a href="./main.html">E-Buy</a>
+                <span>&gt;</span>
+                <a href="./dashboard.html">Your Account</a>
+                <span>&gt;</span>
+                <span>Order History</span>
+            </div>
+
+            <h1 id="page-title">Order History</h1>
+
+            <!-- Filter bar -->
+            <div id="filters-row">
+                <span id="filters-label">Show:</span>
+                <button class="filter-btn active" data-range="30">Last 30 days</button>
+                <button class="filter-btn" data-range="180">Last 6 months</button>
+                <button class="filter-btn" data-range="year">This year</button>
+                <button class="filter-btn" data-range="all">All time</button>
+            </div>
+
+            <!-- Orders list -->
+            <section id="orders-section">
+                <div id="orders-list">
+                    <!-- Filled dynamically by JS -->
+                </div>
+
+                <div id="no-orders" class="hidden">
+                    You have not placed any orders yet.
+                </div>
+            </section>
+
+        </div>
+    </div>
+    <script src="../js/api.js"></script>
+    <script src="../js/orderhistory.js"></script>
+</body>
+</html>

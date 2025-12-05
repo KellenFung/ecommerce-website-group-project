@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E-Buy — Sign In</title>
+  <link rel="stylesheet" href="../styles/auth.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">
+      <img alt="Cart" src="https://png.pngtree.com/png-clipart/20190920/original/pngtree-shopping-cart-convenient-icon-png-image_4637407.jpg" width="48" height="48" />
+      <div>
+        <h1>E-Buy</h1>
+        <h2 class="muted">Sign In to Your Account</h2>
+      </div>
+    </div>
+
+    <div class="center-container">
+      <div class="card">
+        <fieldset>
+          <legend>Login</legend>
+          <form id="loginForm" novalidate>
+            <div class="form-group">
+              <label for="loginEmail">Email</label>
+              <input id="loginEmail" type="email" placeholder="your@email.com" required>
+              <span class="field-error" id="emailError"></span>
+            </div>
+            
+            <div class="form-group">
+              <label for="loginPassword">Password</label>
+              <input id="loginPassword" type="password" placeholder="At least 8 characters" minlength="8" required>
+              <span class="field-error" id="passwordError"></span>
+            </div>
+
+            <div class="actions">
+              <button type="submit" id="loginBtn" class="btn-primary">Sign In</button>
+              <button type="button" id="loginClear" class="btn-secondary">Clear</button>
+            </div>
+
+            <p id="loginMsg" class="muted"></p>
+          </form>
+        </fieldset>
+
+        <div class="register-prompt">
+          <p>Don't have an account?</p>
+          <a href="registerauth.html" class="create-account-link">Create an account if you don't have one</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/loginauth.js"></script>
+</body>
+</html>
