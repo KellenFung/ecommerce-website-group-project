@@ -1,4 +1,5 @@
 const API = "https://ecommerce-website-group-project-production.up.railway.app/api";
+console.log("API base is:", API);
 const headers = { "Content-Type": "application/json", "x-demo-token": "student1" };
 
 async function api(path, opts = {}) {
@@ -34,6 +35,7 @@ const productImages = {
   SmartWatch: "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/9ac5d1ec-3b32-4adb-a2f5-adc8b3c047e9.jpg",
   Vaccum: "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/30d1d685-9631-4dcb-b24a-27211cc47de2.jpg"
 };
+
 
 
 
