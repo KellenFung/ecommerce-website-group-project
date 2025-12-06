@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>E-Commerce</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <!-- external CSS (order: base → cart → products) -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/cart.css">
+  <link rel="stylesheet" href="styles/products.css">
+</head>
+<body>
+  <!-- Cart button -->
+
+  <!-- Shopping cart -->
+  <div id="cartModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeCart()">&times;</span>
+      <h2>Shopping Cart</h2>
+
+      <div class="cart-main-container">
+        <!-- products -->
+        <div id="cartProducts" class="products_container">
+          <div class="empty-message">Loading cart...</div>
+        </div>
+
+        <!-- order summary -->
+        <div class="order-detail-container">
+          <div class="order-summary">
+            <div class="order-summary-title">
+              <h3>ORDER SUMMARY</h3>
+            </div>
+            <div class="order-summary-details">
+              <div id="order-subtotal">Subtotal: $0</div>
+              <div id="order-shipping">Shipping: $0</div>
+              <div id="order-tax">Tax: $0</div>
+            </div>
+            <div class="order-summary-total">
+              <p id="order-total">Total: $0</p>
+            </div>
+            <div class="order-summary-buttons">
+              <button id="checkout" onclick="checkout()">Proceed to Secure Checkout</button>
+              <button id="continue-shopping" onclick="closeCart()">Continue Shopping</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Product detail -->
+  <div id="productModal" class="modal">
+    <div class="modal-content product-modal-content">
+      <span class="close" onclick="closeProductModal()">&times;</span>
+      <div class="product-modal-body">
+        <img id="modalProductImage" src="" alt="Product image">
+        <div class="product-modal-info">
+          <h2 id="modalProductName"></h2>
+          <div class="product-modal-price" id="modalProductPrice"></div>
+          <p class="product-modal-desc">
+            Work in Progress.
+          </p>
+          <div class="product-modal-actions">
+            <label>Quantity:
+              <input id="productQty" class="product-qty-input" type="number" min="1" value="1">
+            </label>
+            <button class="checkout-btn" onclick="addCurrentProductToCart()">Add to Cart</button>
+            <button class="secondary-btn" onclick="closeProductModal()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="header">
+    <div id="website-name">E-Buy</div>
+    <form id="search-box">
+      <input type="text" id="search-input" placeholder="Search for product"/>
+      <button id="submit-search">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+        </svg>
+      </button>
+    </form>
+    <div id="account-box">
+      Hello, user
+      <div id="account-second-line">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="22" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+        </svg>
+        Account
+      </div>
+    </div>
+    <button id="cartButton" onclick="openCart()">
+    <img src="https://png.pngtree.com/png-clipart/20190920/original/pngtree-shopping-cart-convenient-icon-png-image_4637407.jpg" alt="Shopping Cart"/>
+    <div id="cartBadge">0</div>
+  </button>
+  <div id="logout">
+    <svg width="30" height="30" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M1 1L8 1V2L2 2L2 13H8V14H1L1 1ZM10.8536 4.14645L14.1932 7.48614L10.8674 11.0891L10.1326 10.4109L12.358 8L4 8V7L12.2929 7L10.1464 4.85355L10.8536 4.14645Z" fill="#000000"/>
+    </svg>
+    <div id="logout-text">
+      Logout
+    </div>
+  </div>
+  </div>
+  
+  <h2 style="padding-left:20px;">By Mahir, Kellen, Chinemerem, and Kira</h2>
+  <h3 style="padding-left:20px;">Click an item to view details or add it to your cart.</h3>
+
+
+  <div id="main-container">
+    <div class="product-row" id="kitchen-row">
+      <div class="row-title">Kitchen</div>
+      <div class="slider-container">
+        <button class="slide-btn left">&#10094;</button>
+        <div class="slider">
+          <div class="card product-card" data-id="Refrigerator" data-name="Refrigerator" data-price="500">
+            <img src="https://zlinekitchen.com/cdn/shop/products/zline--french--door--stainless--steel--standard--depth--refrigerator--RSM-W-36--side.jpg?v=1722276759&width=1946">
+            <div class="product-overlay">
+              <span class="product-name">Refrigerator</span>
+              <span>$500</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Refrigerator',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="Microwave" data-name="Microwave" data-price="300">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6577/6577280_sd.jpg">
+            <div class="product-overlay">
+              <span class="product-name">Microwave</span>
+              <span>$300</span>
+            <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Microwave',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="Dishwasher" data-name="Dishwasher" data-price="450">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/28f0ed55-0925-4cf5-92a1-cd8e15b2e4c3.jpg">
+            <div class="product-overlay">
+              <span class="product-name">Dishwasher</span>
+              <span>$450</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Dishwasher',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="Oven" data-name="Oven" data-price="550">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6401/6401963_sd.jpg">
+            <div class="product-overlay">
+              <span class="product-name">Oven</span>
+              <span>$550</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Oven',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="Blender" data-name="Blender" data-price="100">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6395/6395884_sd.jpg">
+            <div class="product-overlay">
+              <span class="product-name">Blender</span>
+              <span>$100</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Blender',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="DripCoffee" data-name="Drip Coffee" data-price="150">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6553/6553385_sd.jpg">
+            <div class="product-overlay">
+              <span class="product-name">Drip Coffee</span>
+              <span>$150</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('DripCoffee',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="Cookware" data-name="Cookware" data-price="100">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/12eebe8e-cec5-4e95-a67a-1ed7c3650bf7.jpg;maxHeight=1920;maxWidth=900?format=webp">
+            <div class="product-overlay">
+              <span class="product-name">Cookware</span>
+              <span>$100</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Cookware',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="Toaster" data-name="Toaster" data-price="20">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/9675d7aa-000c-4b78-a8ee-c2413e56c6c4.jpg;maxHeight=1920;maxWidth=900?format=webp">
+            <div class="product-overlay">
+              <span class="product-name">Toaster</span>
+              <span>$20</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Toaster',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="Cooker" data-name="Cooker" data-price="40">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/8a375c18-b729-4b48-8f5e-bb7f3807dd76.jpg;maxHeight=1920;maxWidth=900?format=webp">
+            <div class="product-overlay">
+              <span class="product-name">Cooker</span>
+              <span>$40</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Cooker',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="WaffleMaker" data-name="Waffle Maker" data-price="60">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/2e714d11-f602-44d3-b15b-051e84027af9.jpg;maxHeight=1920;maxWidth=900?format=webp">
+            <div class="product-overlay">
+              <span class="product-name">Waffle Maker</span>
+              <span>$60</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Waffle Maker',1);">Add</button>
+            </div>
+          </div>
+        </div>
+        <button class="slide-btn right">&#10095;</button>
+      </div>
+    </div>
+
+    <div class="banner-container">
+      <div class="banner">
+        <div id="banner-top-text">
+          <div id="main-banner-top">SIGN UP TODAY</div>
+          <div id="below-banner-top">START SAVING IMMEDIATELY!</div>
+        </div>
+        <div id="banner-bottom-text">
+          <div id="guarantee">TWO DAY DELIVERY GUARANTEED</div>
+          <div id="bottom-text-banner">with $0 delivery fees on items greater than $150</div>
+        </div>
+      </div>
+      <div id="image-banner">
+        <img src="https://www.shutterstock.com/image-vector/daily-deals-banner-template-design-600nw-2485939283.jpg"/>
+      </div>
+    </div>
+
+
+    <div class="product-row" id="entertainment-row">
+      <div class="row-title">Entertainment</div>
+      <div class="slider-container">
+        <button class="slide-btn left">&#10094;</button>
+        <div class="slider">
+          <div class="card product-card" data-id="TV" data-name="TV" data-price="300">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/8510dec2-d3bf-4af9-b132-7fc2ecd32305.png;maxHeight=1920;maxWidth=900?format=webp">
+            <div class="product-overlay">
+              <span class="product-name">TV</span>
+              <span>$300</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('TV',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="Monitor" data-name="Computer Monitor" data-price="750">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6208cafc-fd04-4b29-89a5-4b431fde8df7.jpg">
+            <div class="product-overlay">
+              <span class="product-name">Computer Monitor</span>
+              <span>$750</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Monitor',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="Speaker" data-name="Speaker" data-price="350">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6515/6515684_sd.jpg;maxHeight=427;maxWidth=640?format=webp">
+            <div class="product-overlay">
+              <span class="product-name">Speaker</span>
+              <span>$350</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Speaker',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="OutDatedVinyl" data-name="Vinyl" data-price="50">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/a495cade-d7b5-4eb8-a36f-c378d3c29ec9.jpg">
+            <div class="product-overlay">
+              <span class="product-name">Vinyl</span>
+              <span>$50</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('OutDatedVinyl',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="PlayStation5" data-name="PlayStation 5" data-price="599">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6601/6601524_sd.jpg">
+            <div class="product-overlay">
+              <span class="product-name">PlayStation 5</span>
+              <span>$599</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('PlayStation5',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="XboxS" data-name="Xbox Series S" data-price="399">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6470/6470289_sd.jpg">
+            <div class="product-overlay">
+              <span class="product-name">X-Box Series S</span>
+              <span>$399</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('XboxS',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="Switch2" data-name="Switch 2" data-price="499">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/2d2b885d-0b91-4a0a-b8e0-247fd2b26ab7.jpg">
+            <div class="product-overlay">
+              <span class="product-name">Switch 2</span>
+              <span>$499</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Switch2',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="OutDatedGameBoy" data-name="Gameboy" data-price="1">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Game-Boy-FL.png">
+            <div class="product-overlay">
+              <span class="product-name">Gameboy</span>
+              <span>$1</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('OutDatedGameBoy',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="GamingDesktop" data-name="Gaming Desktop" data-price="999">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/08c4770e-4f55-494e-a8ed-6604c87bef73.jpg">
+            <div class="product-overlay">
+              <span class="product-name">Gaming Desktop</span>
+              <span>$999</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('GamingDesktop',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="SmarkSpeaker" data-name="Smart Speaker" data-price="60">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6587/6587898_sd.jpg;maxHeight=427;maxWidth=640?format=webp">
+            <div class="product-overlay">
+              <span class="product-name">Smart Speaker</span>
+              <span>$60</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('SmartSpeaker',1);">Add</button>
+            </div>
+          </div>
+        </div>
+        <button class="slide-btn right">&#10095;</button>
+      </div>
+    </div>
+    <div class="product-row" id="portable-row">
+      <div class="row-title">Portable Electronics</div>
+      <div class="slider-container">
+        <button class="slide-btn left">&#10094;</button>
+        <div class="slider">
+          <div class="card product-card" data-id="iPhone" data-name="iPhone" data-price="920">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/b9d2c4ba-c369-4076-81d0-28a097d72cc5.jpg;maxHeight=1920;maxWidth=900?format=webp">
+            <div class="product-overlay">
+              <span class="product-name">iPhone 17</span>
+              <span>$920</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('iPhone',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="Samsung" data-name="Samsung" data-price="930">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6612/6612706_sd.jpg;maxHeight=427;maxWidth=640?format=webp">
+            <div class="product-overlay">
+              <span class="product-name">Samsung</span>
+              <span>$930</span>
+            <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Samsung',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="Laptop" data-name="Laptop" data-price="599">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/e1d256ca-d2c4-4466-9403-8f422e940305.jpg;maxHeight=427;maxWidth=640?format=webp">
+            <div class="product-overlay">
+              <span class="product-name">Laptop</span>
+              <span>$599</span>
+            <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Laptop',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="Headphones" data-name="Headphones" data-price="49">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/4c7591bb-84b4-4697-b3a7-91ba2d6c83fa.jpg">
+            <div class="product-overlay">
+              <span class="product-name">Headphones</span>
+              <span>$49</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Headphones',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="IPad" data-name="Tablet" data-price="299">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/2a76c272-cd12-43b9-ace9-34df9942ddd6.jpg">
+            <div class="product-overlay">
+              <span class="product-name">Tablet</span>
+              <span>$299</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('IPad',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="Camera" data-name="Camera" data-price="700">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6536/6536336_sd.jpg">
+            <div class="product-overlay">
+              <span class="product-name">Camera</span>
+              <span>$700</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Camera',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="SmartWatch" data-name="Smart Watch" data-price="299">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/9ac5d1ec-3b32-4adb-a2f5-adc8b3c047e9.jpg">
+            <div class="product-overlay">
+              <span class="product-name">Smart Watch</span>
+              <span>$299</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('SmartWatch',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="Airpods" data-name="Airpods" data-price="200">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6084/6084400_sd.jpg;maxHeight=427;maxWidth=640?format=webp">
+            <div class="product-overlay">
+              <span class="product-name">Airpods</span>
+              <span>$200</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('Airpods',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="PhoneCharger" data-name="Phone Charger" data-price="30">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/0e98d00f-dbc3-492d-b062-45a556dbe73b.jpg;maxHeight=427;maxWidth=640?format=webp">
+            <div class="product-overlay">
+              <span class="product-name">Phone Charger</span>
+              <span>$30</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('PhoneCharger',1);">Add</button>
+            </div>
+          </div>
+          <div class="card product-card" data-id="LaptopCharger" data-name="Laptop Charger" data-price="60">
+            <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6471/6471243_sd.jpg;maxHeight=427;maxWidth=640?format=webp">
+            <div class="product-overlay">
+              <span class="product-name">Laptop Charger</span>
+              <span>$60</span>
+              <button class="product-add-btn" onclick="event.stopPropagation(); myItem('LaptopCharger',1);">Add</button>
+            </div>
+          </div>
+        </div>
+        <button class="slide-btn right">&#10095;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS files (same as before) -->
+  <script src="js/api.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

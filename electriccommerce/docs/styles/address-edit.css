@@ -1,0 +1,97 @@
+#main-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#submain-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    padding: 10px;
+}
+
+#path-row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    font-size: 18px;
+}
+
+#path-row a {
+    text-decoration: none;
+    color: black;
+}
+
+#path-row a:hover {
+    text-decoration: underline;
+}
+
+#title-row {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+#edit-container {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    gap: 25px;
+    background-color: #ffffff;
+}
+
+.title {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.edit-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
+
+.edit-row input {
+    font-size: 18px;
+    padding: 6px;
+    width: 140%;
+}
+
+/* Make the State dropdown match the input size */
+#state-select {
+    font-size: 18px;
+    padding: 6px;
+    width: 140%;
+    box-sizing: border-box;
+}
+
+.border-bottom {
+    border-bottom: 1px rgb(192, 191, 191) solid;
+    padding-bottom: 20px;
+}
+
+.save-changes{
+    height: 30px;
+    border-radius: 10px;
+    background-color: rgb(50, 135, 205);
+    color: white;
+}
+
+.save-changes:hover{
+    cursor: pointer;
+}
