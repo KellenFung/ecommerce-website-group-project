@@ -1,0 +1,56 @@
+body{
+    background-color: #f5f5f5;
+}
+#main-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+#account-container{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    gap: 10px;
+}
+
+#account-title{
+    font-size: 30px;
+    font-weight: 700;
+}
+
+#account-options-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.option-row{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.account-option{
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    border: 1px solid gray;
+    padding: 12px;
+    border-radius: 12px;
+}
+
+.account-option:hover{
+    cursor: pointer;
+    background-color: #ece7e7;
+}
+
+.option-title{
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.option-description{
+    font-size: 16px;
+    color: gray;
+}
