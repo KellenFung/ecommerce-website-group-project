@@ -420,4 +420,5 @@ register_payment_routes(app, pool, JWT_SECRET, PAYMENT_ENCRYPTION_KEY)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
+
     app.run(host="0.0.0.0", port=port, debug=True)
