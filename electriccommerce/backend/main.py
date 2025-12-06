@@ -15,8 +15,9 @@ from paymentsystem import register_payment_routes
 app = Flask(__name__)
 CORS(app)
 
-JWT_SECRET = "dev_secret"
-PAYMENT_ENCRYPTION_KEY = os.environ.get('PAYMENT_KEY', 'dev_payment_key_change_in_production')
+JWT_SECRET = os.environ.get("JWT_SECRET", "dev_secret")
+
+PAYMENT_ENCRYPTION_KEY = os.environ.get("PAYMENT_KEY", "dev_payment_key_change_in_production")
 
 DB_CONFIG = {
     "host": os.environ.get("MYSQLHOST", "localhost"),
@@ -422,3 +423,4 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
 
     app.run(host="0.0.0.0", port=port, debug=True)
+
