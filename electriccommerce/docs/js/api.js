@@ -38,3 +38,4 @@ const productImages = {
   Vaccum: "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/30d1d685-9631-4dcb-b24a-27211cc47de2.jpg"
 };
 
+
