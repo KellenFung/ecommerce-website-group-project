@@ -135,10 +135,11 @@ document.addEventListener("DOMContentLoaded", async () => {
           "\nTotal: $" +
           order.total
       );
-      window.location.href = "/";
+      window.location.href = "main.html";
     } catch (e) {
       alert("Failed to place order.");
     }
   });
 });
+
 
