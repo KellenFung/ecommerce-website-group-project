@@ -13,9 +13,9 @@ from datetime import datetime, timedelta
 import random
 
 
-resend.api_key = "re_2i5ip6tL_NGdbJX6hF56QJ1UeKNknUxWM"
+resend.api_key = os.environ.get("RESEND_API_KEY")
 
-FROM_EMAIL = "onboarding@resend.dev"
+FROM_EMAIL = os.environ.get("FROM_EMAIL", "onboarding@resend.dev")
 
 
 def calculate_delivery_date(order_date=None):
@@ -334,4 +334,5 @@ def send_delivery_update(order_id, user_email, status, tracking_url=None):
         
     except Exception as e:
         print(f"Failed to send update: {e}")
+
         return None
