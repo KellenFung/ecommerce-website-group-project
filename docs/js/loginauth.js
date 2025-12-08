@@ -1,8 +1,6 @@
 /**
  * loginauth.js - User login handler
- * ✅ PRODUCTION-READY with proper error handling
- * ✅ Only stores JWT token - all user data comes from database via API
- * ✅ Session persists across browser sessions until token expires
+ * Session persists across browser sessions until token expires
  */
 
 async function postJSON(path, body) {
@@ -41,7 +39,6 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   const msg = document.getElementById("loginMsg");
   let hasError = false;
 
-  // ✅ CLIENT-SIDE VALIDATION
   if (!email) {
     showFieldError("loginEmail", "emailError", "Email is required");
     hasError = true;
@@ -67,10 +64,9 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   submitBtn.textContent = "Signing in...";
 
   try {
-    // ✅ LOGIN REQUEST - validates against database
+    // LOGIN REQUEST - validates against database
     const data = await postJSON("/auth/login", { email, password });
     
-    // ✅ ONLY store the JWT token - nothing else!
     // Token persists across browser sessions until it expires
     // All user data will be fetched from database when needed
     localStorage.setItem("token", data.token);
@@ -80,7 +76,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     msg.textContent = "Login successful! Redirecting...";
     console.log("✓ User logged in successfully:", email);
 
-    // ✅ Redirect to dashboard after short delay
+    // Redirect to dashboard after short delay
     setTimeout(() => {
       window.location.href = "dashboard.html";
     }, 800);
@@ -88,14 +84,14 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   } catch (err) {
     console.error("Login failed:", err);
     
-    // ✅ Re-enable button
+    // Re-enable button
     submitBtn.disabled = false;
     submitBtn.textContent = originalText;
     
     msg.className = "error";
     msg.style.display = "block";
     
-    // ✅ SHOW USER-FRIENDLY ERROR MESSAGES
+    //SHOW USER-FRIENDLY ERROR MESSAGES
     const errorMessage = err.message.toLowerCase();
     
     if (errorMessage.includes("invalid credentials") || 
@@ -117,7 +113,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   }
 });
 
-// ✅ Clear errors on input
+//Clear errors on input
 document.getElementById("loginEmail").addEventListener("input", function () {
   if (this.value) {
     document.getElementById("emailError").textContent = "";
@@ -162,4 +158,5 @@ window.addEventListener('DOMContentLoaded', async () => {
       localStorage.removeItem('token');
     }
   }
+
 });
