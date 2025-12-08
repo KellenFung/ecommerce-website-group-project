@@ -1,5 +1,4 @@
 /**
- * login-edit.js - FIXED VERSION
  * User login credentials editor
  * Requires authentication
  */
@@ -176,3 +175,4 @@ function setupSaveButtons() {
   });
 
 }
+
