@@ -74,7 +74,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     msg.className = "success";
     msg.style.display = "block";
     msg.textContent = "Login successful! Redirecting...";
-    console.log("✓ User logged in successfully:", email);
+    console.log("Success: User logged in successfully:", email);
 
     // Redirect to dashboard after short delay
     setTimeout(() => {
@@ -97,7 +97,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     if (errorMessage.includes("invalid credentials") || 
         errorMessage.includes("401") || 
         errorMessage.includes("unauthorized")) {
-      msg.textContent = "✗ Incorrect email or password. Please try again.";
+      msg.textContent = "Error: Incorrect email or password. Please try again.";
       showFieldError("loginEmail", "emailError", " ");
       showFieldError("loginPassword", "passwordError", "Check your credentials");
     } 
@@ -108,7 +108,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
       msg.textContent = "Server error. Please try again in a few moments.";
     }
     else {
-      msg.textContent = "✗ " + (err.message || "Login failed. Please try again.");
+      msg.textContent = "Error: " + (err.message || "Login failed. Please try again.");
     }
   }
 });
@@ -160,4 +160,5 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 
 });
+
 
