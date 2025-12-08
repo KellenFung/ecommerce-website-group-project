@@ -10,7 +10,7 @@ import jwt
 from mysql.connector import pooling, Error as MySQLError
 from email_validator import validate_email, EmailNotValidError
 
-from paymentsystem import register_payment_routes
+from .paymentsystem import register_payment_routes
 
 app = Flask(__name__)
 CORS(app)
@@ -951,4 +951,5 @@ register_payment_routes(app, pool, JWT_SECRET, PAYMENT_ENCRYPTION_KEY)
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     app.run(host="0.0.0.0", port=port)
+
 
