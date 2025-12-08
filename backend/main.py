@@ -15,14 +15,15 @@ from paymentsystem import register_payment_routes
 app = Flask(__name__)
 CORS(app)
 
-JWT_SECRET = "dev_secret"
-PAYMENT_ENCRYPTION_KEY = os.environ.get('PAYMENT_KEY', 'dev_payment_key_change_in_production')
+JWT_SECRET = os.environ.get("JWT_SECRET", "dev_secret")
+PAYMENT_ENCRYPTION_KEY = os.environ.get("PAYMENT_KEY", "dev_payment_key_change_in_production")
 
 DB_CONFIG = {
-    "host": "localhost",
-    "user": "ebuy_user",
-    "password": "Software5432",
-    "database": "ebuy_app",
+    "host": os.environ.get("MYSQLHOST", "localhost"),
+    "user": os.environ.get("MYSQLUSER", "ebuy_user"),
+    "password": os.environ.get("MYSQLPASSWORD", "Software5432"),
+    "database": os.environ.get("MYSQLDATABASE", "ebuy_app"),
+    "port": int(os.environ.get("MYSQLPORT", "3306")),
 }
 
 pool = pooling.MySQLConnectionPool(
@@ -948,4 +949,5 @@ register_payment_routes(app, pool, JWT_SECRET, PAYMENT_ENCRYPTION_KEY)
 
 
 if __name__ == "__main__":
+
     app.run(host="0.0.0.0", port=8000, debug=True)
