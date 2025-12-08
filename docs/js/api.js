@@ -1,6 +1,5 @@
 
-
-const API_BASE = "http://127.0.0.1:8000/api";
+const API_BASE = "https://ecommerce-website-group-project-production.up.railway.app/api";
 
 // Default headers for all requests
 const headers = {
@@ -238,4 +237,5 @@ const productImages = {
   Cooker: "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/8a375c18-b729-4b48-8f5e-bb7f3807dd76.jpg",
   WaffleMaker: "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/2e714d11-f602-44d3-b15b-051e84027af9.jpg",
   SmartSpeaker: "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6587/6587898_sd.jpg"
+
 };
