@@ -1,5 +1,4 @@
 /**
- * dashboard.js - FIXED VERSION
  * Loads user name from database and displays welcome message
  */
 
@@ -70,3 +69,4 @@ if (customerServiceBox) {
   }
 
 });
+
