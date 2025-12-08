@@ -65,7 +65,8 @@ if (customerServiceBox) {
   const title = document.getElementById("account-title");
   if (title) {
     title.addEventListener("click", () => {
-      window.location.href = "main.html";
+      window.location.href = "index.html";
     });
   }
+
 });
