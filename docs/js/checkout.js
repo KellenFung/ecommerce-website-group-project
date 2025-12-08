@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const defaultMethod = await authedApi("/payment-methods/default");
 
     if (defaultMethod) {
-      console.log("✅ Loaded default payment method");
+      console.log("Loaded default payment method");
 
       // Card number (masked)
       if (cardNumberEl && !touched.cardNumber && !cardNumberEl.value) {
@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       // CVV
       if (cvvEl && !touched.cvv && !cvvEl.value && defaultMethod.cvv) {
         cvvEl.value = defaultMethod.cvv;
-        console.log("✅ Autofilled CVV");
+        console.log("Autofilled CVV");
       }
     }
   } catch (err) {
@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const cart = await authedApi("/cart");
-    console.log("✅ Loaded cart:", cart);
+    console.log("Loaded cart:", cart);
 
     if (!cart.items || cart.items.length === 0) {
       summaryEl.textContent = "Your cart is empty.";
@@ -235,3 +235,4 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
 });
+
