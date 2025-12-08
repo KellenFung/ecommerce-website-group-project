@@ -206,9 +206,10 @@ window.addEventListener('DOMContentLoaded', async () => {
     try {
       await authedApi('/account/me');
       console.log('✓ Already logged in, redirecting to main page');
-      window.location.href = "main.html";
+      window.location.href = "index.html";
     } catch (error) {
       localStorage.removeItem('token');
     }
   }
+
 });
