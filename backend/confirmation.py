@@ -7,7 +7,6 @@ Handles:
 - Delivery status updates
 """
 
-import resend
 import os
 from datetime import datetime, timedelta
 import random
@@ -15,7 +14,7 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
 
-SENDGRID_API_KEY = ""
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY", "")
 
 
 def calculate_delivery_date(order_date=None):
@@ -327,3 +326,4 @@ def send_delivery_update(order_id, user_email, status, tracking_url=None):
     except Exception as e:
         print(f"❌ Failed to send email: {e}")
         return None
+
