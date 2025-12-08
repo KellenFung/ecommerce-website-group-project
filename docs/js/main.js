@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (confirm("Are you sure you want to log out?")) {
           localStorage.removeItem("token");
           alert("You have been logged out successfully.");
-          window.location.href = "main.html";
+          window.location.href = "index.html";
         }
       };
     }
@@ -135,4 +135,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     })
   })
   
+
 });
