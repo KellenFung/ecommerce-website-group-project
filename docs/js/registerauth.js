@@ -116,8 +116,8 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
     
     msg.className = "success";
     msg.style.display = "block";
-    msg.textContent = "✓ Account created successfully! Redirecting to login...";
-    console.log("✓ New account created for:", email);
+    msg.textContent = "Success: Account created successfully! Redirecting to login...";
+    console.log("Success: New account created for:", email);
     
     document.getElementById("registerForm").reset();
     
@@ -139,23 +139,23 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
         errorMessage.includes("duplicate") ||
         errorMessage.includes("already exists")) {
       showFieldError("regEmail", "emailError", "This email is already registered");
-      msg.textContent = "✗ This email is already registered. Please use a different email or sign in instead.";
+      msg.textContent = "Error: This email is already registered. Please use a different email or sign in instead.";
       
       msg.innerHTML = `
-        ✗ This email is already registered. 
+        Error: This email is already registered. 
         <a href="loginauth.html" style="color: #007bff; text-decoration: underline;">
           Click here to sign in instead
         </a>
       `;
     }
     else if (errorMessage.includes("network")) {
-      msg.textContent = "✗ Unable to connect to server. Please check your internet connection.";
+      msg.textContent = "Error: Unable to connect to server. Please check your internet connection.";
     }
     else if (errorMessage.includes("server error")) {
-      msg.textContent = "✗ Server error. Please try again in a few moments.";
+      msg.textContent = "Error: Server error. Please try again in a few moments.";
     }
     else {
-      msg.textContent = "✗ " + (e.message || "Registration failed. Please try again.");
+      msg.textContent = "Error: " + (e.message || "Registration failed. Please try again.");
     }
     
     console.error("Registration failed:", e);
@@ -225,4 +225,5 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 
 });
+
 
