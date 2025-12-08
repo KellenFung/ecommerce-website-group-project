@@ -57,7 +57,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 
   if (hasError) return;
 
-  // ✅ Disable button to prevent double submission
+  // Disable button to prevent double submission
   const submitBtn = document.getElementById("loginBtn");
   const originalText = submitBtn.textContent;
   submitBtn.disabled = true;
@@ -160,3 +160,4 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 
 });
+
