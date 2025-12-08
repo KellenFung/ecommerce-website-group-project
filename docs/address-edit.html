@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Your Address</title>
+    <link rel="stylesheet" href="../styles/address-edit.css" type="text/css" />
+</head>
+<body>
+    <div id="main-container">
+        <div id="submain-container">
+            <div id="path-row">
+                <a href="./main.html">E-Buy</a>
+                <span>&gt;</span>
+                <a href="./dashboard.html">Your Account</a>
+                <span>&gt;</span>
+                <span>Address</span>
+            </div>
+
+            <div id="title-row">
+                Address
+            </div>
+
+            <div id="edit-container">
+                <!-- Street -->
+                <div class="edit-box border-bottom">
+                    <div id="street-row" class="edit-row">
+                        <div class="title">Street</div>
+                        <input type="text" id="street-input" />
+                    </div>
+                    <button class="save-changes">Save Change</button>
+                </div>
+
+                <!-- City -->
+                <div class="edit-box border-bottom">
+                    <div id="city-row" class="edit-row">
+                        <div class="title">City</div>
+                        <input type="text" id="city-input" />
+                    </div>
+                    <button class="save-changes">Save Change</button>
+                </div>
+
+                <!-- State/Province -->
+                <div class="edit-box border-bottom">
+                    <div id="state-row" class="edit-row">
+                        <div class="title">State/Province/Region</div>
+                        <input type="text" id="state-input" placeholder="Enter State/Province/Region" />
+                    </div>
+                    <button class="save-changes">Save Change</button>
+                </div>
+
+                <!-- Country -->
+                <div class="edit-box border-bottom">
+                    <div id="country-row" class="edit-row">
+                        <div class="title">Country</div>
+                        <input type="text" id="country-input" placeholder="Enter Country" />
+                    </div>
+                    <button class="save-changes">Save Change</button>
+                </div>
+
+                <!-- Zip Code -->
+                <div class="edit-box">
+                    <div id="zip-row" class="edit-row">
+                        <div class="title">Zip Code</div>
+                        <input type="text" id="zip-input" placeholder="e.g., 10001, M5H 2N2, 10115" />
+                    </div>
+                    <button class="save-changes">Save Change</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/address-edit.js"></script>
+</body>
+</html>

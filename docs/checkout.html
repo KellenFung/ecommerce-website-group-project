@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Checkout</title>
+    <link rel="stylesheet" href="../styles/checkout.css" />
+</head>
+<body>
+    <div id="main-container">
+        <div id="checkout-title">
+            <h2>Preparing your order</h2>
+        </div>
+        <div id="checkout-container">
+            <div id="shipping-info">
+                <div id="shipping-sub-title">
+                    SHIPPING INFORMATION
+                </div>
+                <div id="name-line">
+                    <div id="first-name-box">
+                        <div class="input-label">First Name</div>
+                        <input type="text" id="first-name" placeholder="Enter first name"/>
+                    </div>
+                    <div id="last-name-box">
+                        <div class="input-label">Last Name</div>
+                        <input type="text" id="last-name" placeholder="Enter last name"/>
+                    </div>
+                </div>
+                
+                <div id="street-line">
+                    <div class="input-label">Street</div>
+                    <input type="text" id="street" class="full-line" placeholder="House Number, Street Name"/>
+                </div>
+                
+                <div id="city-state-line">
+                    <div id="city-box">
+                        <div class="input-label">City</div>
+                        <input type="text" id="city" placeholder="Enter city"/>
+                    </div>
+                    <div id="state-box">
+                        <div class="input-label">State/Province</div>
+                        <input type="text" id="state" placeholder="e.g., CA, ON"/>
+                    </div>
+                </div>
+                
+                <div id="country-zip-line">
+                    <div id="country-box">
+                        <div class="input-label">Country</div>
+                        <input type="text" id="country" placeholder="Enter country"/>
+                    </div>
+                    <div id="zip-box">
+                        <div class="input-label">Zip Code</div>
+                        <input type="text" id="zip" placeholder="Zip code"/>
+                    </div>
+                </div>
+                
+                <div id="phone-line">
+                    <div class="input-label">Phone Number</div>
+                    <input type="text" id="phone-number" class="full-line" placeholder="Enter phone number"/>
+                </div>
+                <div id="email-line">
+                    <div class="input-label">Email Address</div>
+                    <input type="email" id="email" class="full-line" placeholder="Enter email address"/>
+                </div>
+            </div>
+            <div id="payment-info">
+                <div id="payment-info-title">
+                    Your Order
+                </div>
+                <div id="order-summary">
+
+                </div>
+                <div id="order-calculations">
+
+                </div>
+                <div id="card-info-field">
+                    <div id="card-line">
+                        <div class="card-input-label">Card Number</div>
+                        <input type="text" id="card-number" class="full-line" placeholder="Enter credit card number"/>
+                    </div>
+                    <div id="exp-date-cvv-line">
+                        <div id="exp-date-box">
+                            <div class="card-input-label">Expiration</div>
+                            <input type="text" id="card-expiration" placeholder="MM/YY"/>
+                        </div>
+                        <div id="cvv-date-box">
+                            <div class="card-input-label">CVV</div>
+                            <input type="text" id="card-cvv" placeholder="CVV"/>
+                        </div>
+                    </div>
+                </div>
+                <div id="submit-order">
+                    <button id="place-order">Place Order</button>
+                    <button id="exit-checkout" onclick="window.location.href='main.html'">
+                        Continue Shopping
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="../js/api.js"></script>
+    <script type="text/javascript" src="../js/checkout.js"></script>
+</body>
+</html>
