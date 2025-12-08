@@ -139,7 +139,7 @@ function setupSaveButtons() {
     try {
       const response = await authedApi("/account/me", {
         method: "PUT",
-        body: JSON.stringify({ phone: value }),
+        body: JSON.stringify({ shipping_phone: value }),
       });
       console.log("Phone update response:", response);
       showSaved("Phone number");
@@ -174,4 +174,5 @@ function setupSaveButtons() {
       alert("Failed to update password: " + err.message);
     }
   });
+
 }
