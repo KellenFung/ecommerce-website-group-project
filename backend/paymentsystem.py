@@ -4,10 +4,6 @@ import base64
 from mysql.connector import Error as MySQLError
 
 
-# ========== ENCRYPTION HELPERS ==========
-# NOTE: This is a simple XOR encryption for DEMO purposes only.
-# In production, use proper encryption like cryptography.fernet or a payment API like Stripe.
-
 def simple_encrypt(data, key):
     """Simple XOR encryption - for demo only"""
     key_bytes = key.encode()
@@ -65,7 +61,7 @@ def get_user_from_token(jwt_secret):
 def register_payment_routes(app, pool, jwt_secret, encryption_key):
     """
     Register all payment-related routes to the Flask app.
-    ✅ ALL DATA FROM MYSQL DATABASE - NO LOCALSTORAGE
+    ALL DATA FROM MYSQL DATABASE - NO LOCALSTORAGE
     
     Args:
         app: Flask application instance
@@ -538,3 +534,4 @@ def register_payment_routes(app, pool, jwt_secret, encryption_key):
                 conn.close()
             except Exception:
                 pass
+
