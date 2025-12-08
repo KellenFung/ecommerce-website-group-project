@@ -20,9 +20,9 @@ PAYMENT_ENCRYPTION_KEY = os.environ.get("PAYMENT_KEY", "dev_payment_key_change_i
 
 DB_CONFIG = {
     "host": os.environ.get("MYSQLHOST", "localhost"),
-    "user": os.environ.get("MYSQLUSER", "ebuy_user"),
-    "password": os.environ.get("MYSQLPASSWORD", "Software5432"),
-    "database": os.environ.get("MYSQLDATABASE", "ebuy_app"),
+    "user": os.environ.get("MYSQLUSER", "root"),
+    "password": os.environ.get("MYSQLPASSWORD", ""),
+    "database": os.environ.get("MYSQLDATABASE", "railway"),
     "port": int(os.environ.get("MYSQLPORT", "3306")),
 }
 
@@ -949,5 +949,6 @@ register_payment_routes(app, pool, JWT_SECRET, PAYMENT_ENCRYPTION_KEY)
 
 
 if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))
+    app.run(host="0.0.0.0", port=port)
 
-    app.run(host="0.0.0.0", port=8000, debug=True)
