@@ -227,10 +227,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       alert(
         `Order placed successfully!\nOrder ID: ${order.id}\nTotal: $${order.total.toFixed(2)}`
       );
-      window.location.href = "main.html";
+      window.location.href = "index.html";
     } catch (e) {
       console.error("Failed to place order:", e);
       alert("Failed to place order: " + e.message);
     }
   });
+
 });
