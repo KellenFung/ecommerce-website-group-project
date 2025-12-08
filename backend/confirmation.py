@@ -11,11 +11,11 @@ import resend
 import os
 from datetime import datetime, timedelta
 import random
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 
-resend.api_key = os.environ.get("RESEND_API_KEY")
-
-FROM_EMAIL = os.environ.get("FROM_EMAIL", "onboarding@resend.dev")
+SENDGRID_API_KEY = ""
 
 
 def calculate_delivery_date(order_date=None):
@@ -231,27 +231,20 @@ def send_order_confirmation(order_data, user_email):
     </body>
     </html>
     """
-    
+    message = Mail(
+        from_email='parveenrap@gmail.com', 
+        to_emails=user_email,
+        subject=f"✓ Order Confirmation #{order_data['id']}",
+        html_content=html_content 
+    )
+
     try:
-        # Send email via Resend
-        params = {
-            "from": FROM_EMAIL,
-            "to": [user_email],
-            "subject": f"✓ Order Confirmation #{order_data['id']} - Arriving {delivery_date_str}",
-            "html": html_content
-        }
-        
-        response = resend.Emails.send(params)
-        
-        print(f"Email sent successfully!")
-        print(f"   To: {user_email}")
-        print(f"   Order: #{order_data['id']}")
-        print(f"   Email ID: {response.get('id')}")
-        
+        sg = SendGridAPIClient(SENDGRID_API_KEY)
+        response = sg.send(message)
+        print(f"✅ Email sent to {user_email}")
         return response
-        
     except Exception as e:
-        print(f"Failed to send email: {e}")
+        print(f"❌ Failed to send email: {e}")
         return None
 
 
@@ -319,20 +312,18 @@ def send_delivery_update(order_id, user_email, status, tracking_url=None):
     </body>
     </html>
     """
-    
-    try:
-        params = {
-            "from": FROM_EMAIL,
-            "to": [user_email],
-            "subject": f"{status_info['emoji']} {status_info['title']} - Order #{order_id}",
-            "html": html_content
-        }
-        
-        response = resend.Emails.send(params)
-        print(f"Status update sent to {user_email}")
-        return response
-        
-    except Exception as e:
-        print(f"Failed to send update: {e}")
+    message = Mail(
+        from_email='orders@kellenfung.com',  # Use any email
+        to_emails=user_email,
+        subject=f"{status_info['emoji']} {status_info['title']} - Order #{order_id}",
+        html_content=html_content  # Your existing HTML
+    )
 
+    try:
+        sg = SendGridAPIClient(SENDGRID_API_KEY)
+        response = sg.send(message)
+        print(f"✅ Email sent to {user_email}")
+        return response
+    except Exception as e:
+        print(f"❌ Failed to send email: {e}")
         return None
