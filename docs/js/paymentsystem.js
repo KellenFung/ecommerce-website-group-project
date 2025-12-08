@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:8000/api";
+const API = "https://ecommerce-website-group-project-production-e0ec.up.railway.app/api";
 
 let editingPaymentId = null;
 
