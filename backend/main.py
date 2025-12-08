@@ -762,7 +762,6 @@ def create_order():
         #delete below till exception for mysql and uncomment return jsonify(order_obj), 201
         conn.commit()
         
-        # ✅ GET PRODUCT NAMES FOR EMAIL
         cur.execute(
             """
             SELECT oi.product_id, oi.quantity, oi.unit_price, p.name
@@ -774,7 +773,7 @@ def create_order():
         )
         items_with_names = cur.fetchall()
         
-        # ✅ SEND CONFIRMATION EMAIL
+        # SEND CONFIRMATION EMAIL
         try:
             # Get user email
             cur.execute("SELECT email FROM users WHERE id = %s", (user_id,))
@@ -801,11 +800,11 @@ def create_order():
             
             # Send email
             send_order_confirmation(email_data, user_email)
-            print(f"✅ Confirmation email sent to {user_email}")
+            print(f"Confirmation email sent to {user_email}")
             
         except Exception as email_err:
             # Don't fail the order if email fails
-            print(f"⚠️ Email failed (order still created): {email_err}")
+            print(f"Email failed (order still created): {email_err}")
         
         # Build response
         order_obj = {
@@ -1021,6 +1020,7 @@ register_payment_routes(app, pool, JWT_SECRET, PAYMENT_ENCRYPTION_KEY)
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     app.run(host="0.0.0.0", port=port)
+
 
 
 
