@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       document.getElementById("city-input").value = account.shipping_city;
     }
     
-    // Load state/province (try both fields for backward compatibility)
     const stateValue = account.shipping_state || "";
     if (stateValue) {
       document.getElementById("state-input").value = stateValue;
@@ -71,4 +70,5 @@ async function saveAddress() {
     console.error("Failed to save address:", err);
     alert("Could not save address: " + err.message);
   }
+
 }
