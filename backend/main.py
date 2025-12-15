@@ -18,7 +18,14 @@ from .confirmation import (
 )
 
 app = Flask(__name__)
-CORS(app)
+
+CORS(
+    app,
+    origins=["https://kellenfung.github.io"],
+    methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"],
+)
+
 
 JWT_SECRET = os.environ.get("JWT_SECRET", "dev_secret")
 PAYMENT_ENCRYPTION_KEY = os.environ.get("PAYMENT_KEY", "dev_payment_key_change_in_production")
@@ -1225,6 +1232,7 @@ register_payment_routes(app, pool, JWT_SECRET, PAYMENT_ENCRYPTION_KEY)
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     app.run(host="0.0.0.0", port=port)
+
 
 
 
