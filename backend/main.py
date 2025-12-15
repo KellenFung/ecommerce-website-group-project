@@ -1085,7 +1085,6 @@ def admin_list_users():
 def admin_list_orders():
     """
     Admin-only: list all orders with user info and item details.
-    Now also returns tax + totalWithTax, and includes qty/price aliases per item.
     """
     require_admin()
 
@@ -1135,10 +1134,8 @@ def admin_list_orders():
                     "email": order.get("user_email"),
                 },
 
-                # For admin display: make total INCLUDE tax (so your UI "Total" column just works)
                 "total": round(total_with_tax, 2),
 
-                # Extra fields (nice to show later if you want)
                 "subtotal": round(subtotal, 2),
                 "tax": round(tax, 2),
                 "totalWithTax": round(total_with_tax, 2),
@@ -1159,11 +1156,9 @@ def admin_list_orders():
                         "productId": it["product_id"],
                         "productName": it["product_name"],
 
-                        # Quantity in both  names so frontend won't show undefined
                         "quantity": int(it["quantity"]),
                         "qty": int(it["quantity"]),
 
-                        # Price aliases (optional, but helpful)
                         "unitPrice": float(it["unit_price"]),
                         "price": float(it["unit_price"]),
 
@@ -1230,6 +1225,7 @@ register_payment_routes(app, pool, JWT_SECRET, PAYMENT_ENCRYPTION_KEY)
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     app.run(host="0.0.0.0", port=port)
+
 
 
 
