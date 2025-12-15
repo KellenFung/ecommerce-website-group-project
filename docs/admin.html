@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E-Buy — Admin Dashboard</title>
+
+  <link rel="stylesheet" href="../styles/admin.css" />
+</head>
+
+<body>
+  <header class="topbar">
+    <!-- THIS wrapper is what makes the top bar align evenly like the “blue” layout -->
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="logo">E-Buy</div>
+        <div class="subtitle">Admin Dashboard</div>
+      </div>
+
+      <div class="topbar-actions">
+        <div class="pill" id="adminBadge">Checking admin…</div>
+        <button class="btn btn-outline" id="logoutBtn" type="button">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- USERS PANEL -->
+    <section class="panel">
+      <div class="panel-header">
+        <h1>Users</h1>
+        <div class="filters">
+          <input id="userSearch" type="text" placeholder="Search users (name / email / id)" />
+          <button class="btn" id="refreshUsersBtn" type="button">Refresh</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width: 80px;">ID</th>
+              <th style="min-width: 220px;">Name</th>
+              <th style="min-width: 240px;">Email</th>
+              <th style="width: 90px;">Admin</th>
+              <th style="min-width: 180px;">Created</th>
+              <th style="min-width: 320px;">Shipping</th>
+            </tr>
+          </thead>
+          <tbody id="usersTbody">
+            <tr><td colspan="6" class="muted">Loading users…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ORDERS PANEL -->
+    <section class="panel">
+      <div class="panel-header">
+        <h1>Orders</h1>
+        <div class="filters">
+          <input id="orderSearch" type="text" placeholder="Search orders (order id / user email / user id)" />
+          <select id="statusFilter">
+            <option value="">All Statuses</option>
+            <option value="pending">pending</option>
+            <option value="paid">paid</option>
+            <option value="shipped">shipped</option>
+            <option value="delivered">delivered</option>
+            <option value="failed">failed</option>
+            <option value="cancelled">cancelled</option>
+          </select>
+          <button class="btn" id="refreshOrdersBtn" type="button">Refresh</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="min-width: 140px;">Order</th>
+              <th style="min-width: 240px;">User</th>
+              <th style="width: 120px;">Total</th>
+              <th style="width: 140px;">Status</th>
+              <th style="min-width: 180px;">Created</th>
+              <th style="min-width: 260px;">Shipping</th>
+              <th style="min-width: 360px;">Items</th>
+              <th style="min-width: 220px;">Update</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTbody">
+            <tr><td colspan="8" class="muted">Loading orders…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="msg" class="msg hidden"></div>
+    </section>
+
+  </main>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/admin.js"></script>
+</body>
+</html>
