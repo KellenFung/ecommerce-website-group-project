@@ -202,6 +202,7 @@ function showSuccess(message) {
   }
 }
 
+//local storage as fallback in case of database failure
 const productImages = {
   Refrigerator: "https://zlinekitchen.com/cdn/shop/products/zline--french--door--stainless--steel--standard--depth--refrigerator--RSM-W-36--side.jpg?v=1722276759&width=1946",
   Microwave: "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6577/6577280_sd.jpg",
@@ -239,3 +240,4 @@ const productImages = {
   SmartSpeaker: "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6587/6587898_sd.jpg"
 
 };
+
