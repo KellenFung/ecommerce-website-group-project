@@ -1,5 +1,4 @@
 /**
- * main.js - Main application logic and navigation
  * Handles navbar, authentication state, logout, and search
  */
 
@@ -137,3 +136,4 @@ document.addEventListener("DOMContentLoaded", async () => {
   
 
 });
+
