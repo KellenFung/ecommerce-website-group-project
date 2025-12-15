@@ -182,7 +182,7 @@ def send_order_confirmation(order_data, user_email):
                 
                 <!-- Track Order Button -->
                 <div style="text-align: center; margin-top: 40px;">
-                    <a href="http://127.0.0.1:5500/orderstatus.html?order={order_data['id']}" 
+                    <a href="#" 
                        style="display: inline-block; padding: 16px 50px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); transition: transform 0.2s;">
                         Track Your Order →
                     </a>
@@ -312,6 +312,7 @@ def send_delivery_update(order_id, user_email, status, tracking_url=None):
     except Exception as e:
         print(f"Failed to send email: {e}")
         return None
+
 
 
 
