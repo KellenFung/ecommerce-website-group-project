@@ -135,7 +135,7 @@ def health():
     return jsonify({"ok": True})
 
 
-# ---------- AUTH ROUTES ----------
+# AUTH ROUTES 
 
 @app.post("/api/auth/register")
 def register():
@@ -254,7 +254,7 @@ def login():
             pass
 
 
-# ---------- ACCOUNT ROUTES (PROFILE / ADDRESS / LOGIN INFO) ----------
+# ACCOUNT ROUTES (PROFILE / ADDRESS / LOGIN INFO)
 
 @app.get("/api/account/me")
 def get_account():
@@ -420,7 +420,7 @@ def update_account():
             pass
 
 
-# ---------- PRODUCTS / CART / ORDERS ----------
+# PRODUCTS / CART / ORDERS 
 
 @app.get("/api/products")
 def list_products():
@@ -805,7 +805,6 @@ def create_order():
             "createdAt": created_at.isoformat(),
         }
         
-        #delete below till exception for mysql and uncomment return jsonify(order_obj), 201
         conn.commit()
         
         cur.execute(
@@ -1232,7 +1231,7 @@ def admin_update_order_status(order_id):
         except Exception:
             pass
 
-# ---------- REGISTER PAYMENT ROUTES ----------
+# REGISTER PAYMENT ROUTES
 
 register_payment_routes(app, pool, JWT_SECRET, PAYMENT_ENCRYPTION_KEY)
 
@@ -1240,6 +1239,7 @@ register_payment_routes(app, pool, JWT_SECRET, PAYMENT_ENCRYPTION_KEY)
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     app.run(host="0.0.0.0", port=port)
+
 
 
 
