@@ -1,9 +1,3 @@
-/**
- * cart.js - FIXED VERSION
- * Uses authedApi() for authentication
- * Uses cart_item_id (item.id) for PATCH/DELETE operations
- */
-
 // Update cart badge in header
 async function updateCartBadge() {
   try {
@@ -192,4 +186,5 @@ function closeCart() {
 async function checkout() {
   closeCart();
   window.location.href = "checkout.html";
+
 }
