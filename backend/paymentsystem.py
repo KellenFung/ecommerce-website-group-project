@@ -56,7 +56,7 @@ def get_user_from_token(jwt_secret):
         abort(401, "Invalid or expired token")
 
 
-# ========== ROUTE REGISTRATION ==========
+#ROUTE REGISTRATION
 
 def register_payment_routes(app, pool, jwt_secret, encryption_key):
     """
@@ -86,7 +86,6 @@ def register_payment_routes(app, pool, jwt_secret, encryption_key):
             conn = pool.get_connection()
             cur = conn.cursor(dictionary=True)
             
-            #Query user's payment methods from database
             cur.execute("""
                 SELECT id, card_type, cardholder_name, last_four_digits, 
                        expiry_date, billing_zip, is_default, created_at
@@ -534,4 +533,5 @@ def register_payment_routes(app, pool, jwt_secret, encryption_key):
                 conn.close()
             except Exception:
                 pass
+
 
