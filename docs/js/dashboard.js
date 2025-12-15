@@ -60,6 +60,14 @@ if (customerServiceBox) {
     });
 }
 
+ // Admin
+const admin = document.getElementById("adminbox123");
+if (admin) {
+ admin.addEventListener("click", () => {
+  window.location.href = "admin.html";
+   });
+}
+  
   // "Your Account" title to go back to main page
   const title = document.getElementById("account-title");
   if (title) {
@@ -69,4 +77,5 @@ if (customerServiceBox) {
   }
 
 });
+
 
