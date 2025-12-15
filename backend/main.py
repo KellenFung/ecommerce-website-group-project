@@ -56,6 +56,7 @@ def issue_token(user):
         "first_name": user["first_name"],
         "last_name": user["last_name"],
         "address": user.get("address"),
+        "is_admin": int(user.get("is_admin") or 0),
     }
     return jwt.encode(payload, JWT_SECRET, algorithm="HS256")
 
@@ -81,6 +82,36 @@ def get_user_id_from_token():
         abort(401, "Invalid token")
 
     return payload.get("id")
+
+
+def require_admin():
+    """
+    Verify the current authenticated user is an admin (checked in DB).
+    Returns:
+        int: user_id if admin
+    Raises:
+        401: if not authenticated
+        403: if not admin
+    """
+    user_id = get_user_id_from_token()
+
+    try:
+        conn = pool.get_connection()
+        cur = conn.cursor(dictionary=True)
+        cur.execute("SELECT is_admin FROM users WHERE id = %s LIMIT 1", (user_id,))
+        row = cur.fetchone()
+        if not row or int(row.get("is_admin") or 0) != 1:
+            abort(403, "Admin access required")
+        return user_id
+    except MySQLError as e:
+        app.logger.exception(e)
+        abort(500, "Server error")
+    finally:
+        try:
+            cur.close()
+            conn.close()
+        except Exception:
+            pass
 
 
 @app.get("/api/health")
@@ -184,7 +215,7 @@ def login():
             SELECT id, first_name, last_name, email, address,
                    shipping_street, shipping_city, shipping_state,
                    shipping_country,
-                   shipping_zip, shipping_phone
+                   shipping_zip, shipping_phone, is_admin
             FROM users
             WHERE email=%s AND password_hash=SHA2(%s,256)
             LIMIT 1
@@ -232,7 +263,7 @@ def get_account():
             SELECT id, first_name, last_name, email, address,
                    shipping_street, shipping_city, shipping_state,
                    shipping_country,
-                   shipping_zip, shipping_phone
+                   shipping_zip, shipping_phone, is_admin
             FROM users
             WHERE id = %s
             LIMIT 1
@@ -1011,6 +1042,185 @@ def pay():
         except Exception:
             pass
 
+# ADMIN ROUTES
+@app.get("/api/admin/verify")
+def admin_verify():
+    require_admin()
+    return jsonify({"ok": True})
+
+
+@app.get("/api/admin/users")
+def admin_list_users():
+    """
+    Admin-only: list all users (read-only).
+    """
+    require_admin()
+
+    try:
+        conn = pool.get_connection()
+        cur = conn.cursor(dictionary=True)
+        cur.execute(
+            """
+            SELECT id, first_name, last_name, email, address,
+                   shipping_street, shipping_city, shipping_state,
+                   shipping_country, shipping_zip, shipping_phone,
+                   is_admin, created_at
+            FROM users
+            ORDER BY created_at DESC
+            """
+        )
+        return jsonify(cur.fetchall())
+    except MySQLError as e:
+        app.logger.exception(e)
+        return jsonify({"errors": [{"msg": "Server error"}]}), 500
+    finally:
+        try:
+            cur.close()
+            conn.close()
+        except Exception:
+            pass
+
+
+@app.get("/api/admin/orders")
+def admin_list_orders():
+    """
+    Admin-only: list all orders with user info and item details.
+    Now also returns tax + totalWithTax, and includes qty/price aliases per item.
+    """
+    require_admin()
+
+    try:
+        conn = pool.get_connection()
+        cur = conn.cursor(dictionary=True)
+
+        # Orders + user identity
+        cur.execute(
+            """
+            SELECT o.id, o.user_id, o.total, o.status, o.created_at, o.paid_at,
+                   o.estimated_delivery_date, o.tracking_number, o.carrier,
+                   o.shipping_name, o.shipping_email, o.shipping_phone, o.shipping_address,
+                   u.first_name, u.last_name, u.email AS user_email
+            FROM orders o
+            LEFT JOIN users u ON u.id = o.user_id
+            ORDER BY o.created_at DESC
+            """
+        )
+        orders = cur.fetchall()
+
+        result = []
+        for order in orders:
+            cur.execute(
+                """
+                SELECT oi.product_id, oi.quantity, oi.unit_price, oi.line_total,
+                       p.name AS product_name
+                FROM order_items oi
+                JOIN products p ON p.id = oi.product_id
+                WHERE oi.order_id = %s
+                """,
+                (order["id"],),
+            )
+            items = cur.fetchall()
+
+            # Compute subtotal/tax/total-with-tax from order_items
+            subtotal = sum(float(it["line_total"]) for it in items)
+            tax = subtotal * 0.08
+            total_with_tax = subtotal + tax
+
+            result.append({
+                "id": order["id"],
+                "userId": order["user_id"],
+                "user": {
+                    "firstName": order.get("first_name"),
+                    "lastName": order.get("last_name"),
+                    "email": order.get("user_email"),
+                },
+
+                # For admin display: make total INCLUDE tax (so your UI "Total" column just works)
+                "total": round(total_with_tax, 2),
+
+                # Extra fields (nice to show later if you want)
+                "subtotal": round(subtotal, 2),
+                "tax": round(tax, 2),
+                "totalWithTax": round(total_with_tax, 2),
+
+                "status": order["status"],
+                "createdAt": order["created_at"].isoformat() if order.get("created_at") else None,
+                "paidAt": order["paid_at"].isoformat() if order.get("paid_at") else None,
+                "estimatedDeliveryDate": order["estimated_delivery_date"].isoformat() if order.get("estimated_delivery_date") else None,
+                "trackingNumber": order.get("tracking_number"),
+                "carrier": order.get("carrier"),
+                "shippingName": order.get("shipping_name"),
+                "shippingEmail": order.get("shipping_email"),
+                "shippingPhone": order.get("shipping_phone"),
+                "shippingAddress": order.get("shipping_address"),
+
+                "items": [
+                    {
+                        "productId": it["product_id"],
+                        "productName": it["product_name"],
+
+                        # Quantity in both  names so frontend won't show undefined
+                        "quantity": int(it["quantity"]),
+                        "qty": int(it["quantity"]),
+
+                        # Price aliases (optional, but helpful)
+                        "unitPrice": float(it["unit_price"]),
+                        "price": float(it["unit_price"]),
+
+                        "lineTotal": float(it["line_total"]),
+                    }
+                    for it in items
+                ],
+            })
+
+        return jsonify(result)
+
+    except MySQLError as e:
+        app.logger.exception(e)
+        return jsonify({"errors": [{"msg": "Server error"}]}), 500
+    finally:
+        try:
+            cur.close()
+            conn.close()
+        except Exception:
+            pass
+
+
+
+@app.put("/api/admin/orders/<order_id>/status")
+def admin_update_order_status(order_id):
+    """
+    Admin-only: update order.status (controlled allowed values).
+    """
+    require_admin()
+
+    data = request.get_json(silent=True) or {}
+    new_status = (data.get("status") or "").strip().lower()
+
+    allowed = {"pending", "paid", "shipped", "delivered", "failed", "cancelled"}
+    if new_status not in allowed:
+        return jsonify({"errors": [{"msg": "Invalid status"}]}), 400
+
+    try:
+        conn = pool.get_connection()
+        cur = conn.cursor()
+
+        cur.execute("UPDATE orders SET status = %s WHERE id = %s", (new_status, order_id))
+        if cur.rowcount == 0:
+            return jsonify({"errors": [{"msg": "Order not found"}]}), 404
+
+        conn.commit()
+        return jsonify({"ok": True, "id": order_id, "status": new_status})
+
+    except MySQLError as e:
+        app.logger.exception(e)
+        return jsonify({"errors": [{"msg": "Server error"}]}), 500
+    finally:
+        try:
+            cur.close()
+            conn.close()
+        except Exception:
+            pass
 
 # ---------- REGISTER PAYMENT ROUTES ----------
 
@@ -1020,6 +1230,7 @@ register_payment_routes(app, pool, JWT_SECRET, PAYMENT_ENCRYPTION_KEY)
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     app.run(host="0.0.0.0", port=port)
+
 
 
 
