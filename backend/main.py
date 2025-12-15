@@ -3,7 +3,7 @@ import uuid
 import datetime
 import os
 
-from flask import Flask, request, jsonify, abort
+from flask import Flask, request, jsonify, abort, make_response
 from flask_cors import CORS
 
 import jwt
@@ -26,6 +26,14 @@ CORS(
     allow_headers=["Content-Type", "Authorization"],
 )
 
+@app.before_request
+def handle_preflight():
+    if request.method == "OPTIONS":
+        response = make_response("", 200)
+        response.headers["Access-Control-Allow-Origin"] = "https://kellenfung.github.io"
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+        response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
+        return response
 
 JWT_SECRET = os.environ.get("JWT_SECRET", "dev_secret")
 PAYMENT_ENCRYPTION_KEY = os.environ.get("PAYMENT_KEY", "dev_payment_key_change_in_production")
@@ -1232,6 +1240,7 @@ register_payment_routes(app, pool, JWT_SECRET, PAYMENT_ENCRYPTION_KEY)
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     app.run(host="0.0.0.0", port=port)
+
 
 
 
