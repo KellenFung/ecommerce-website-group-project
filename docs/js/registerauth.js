@@ -1,7 +1,3 @@
-/**
- * registerauth.js - User registration handler
- */
-
 async function postJSON(path, body) {
   return api(path, {
     method: "POST",
@@ -105,7 +101,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
   submitBtn.textContent = "Creating account...";
 
   try {
-    // Database will reject if email already exists (UNIQUE constraint)
+    // Database will reject if email already exists
     await postJSON("/auth/register", {
       first_name: firstName,
       last_name: lastName,
@@ -225,5 +221,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 
 });
+
 
 
