@@ -189,7 +189,7 @@ async function refreshAll() {
 async function updateOrderStatus(orderId, status) {
   hideMsg();
   try {
-    await authedApi(`/admin/orders/${orderId}`, {
+    await authedApi(`/admin/orders/${orderId}/status`, {
       method: "PUT",
       body: JSON.stringify({ status }),
     });
