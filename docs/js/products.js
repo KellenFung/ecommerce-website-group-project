@@ -1,5 +1,4 @@
 /**
- * products.js
  * Checks authentication before adding to cart
  */
 
@@ -93,4 +92,5 @@ window.addEventListener("click", function(event) {
 
 document.addEventListener("DOMContentLoaded", () => {
   setupProductCards();
+
 });
