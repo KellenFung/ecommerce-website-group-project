@@ -1,4 +1,3 @@
-// Update cart badge in header
 async function updateCartBadge() {
   try {
     const cart = await authedApi("/cart");
@@ -188,3 +187,4 @@ async function checkout() {
   window.location.href = "checkout.html";
 
 }
+
