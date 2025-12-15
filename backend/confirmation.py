@@ -79,8 +79,8 @@ def send_order_confirmation(order_data, user_email):
         """
     
     # Calculate tax (8%)
-    tax = subtotal * 0.08
-    total = order_data['total']
+    tax = round(subtotal * 0.08, 2)
+    total = round(subtotal + tax, 2)
     
     # Format dates
     delivery_date_str = order_data['estimated_delivery_date'].strftime('%B %d, %Y')
@@ -312,5 +312,6 @@ def send_delivery_update(order_id, user_email, status, tracking_url=None):
     except Exception as e:
         print(f"Failed to send email: {e}")
         return None
+
 
 
