@@ -1,5 +1,4 @@
 /**
- * loginauth.js - User login handler
  * Session persists across browser sessions until token expires
  */
 
@@ -67,7 +66,6 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     // LOGIN REQUEST - validates against database
     const data = await postJSON("/auth/login", { email, password });
     
-    // Token persists across browser sessions until it expires
     // All user data will be fetched from database when needed
     localStorage.setItem("token", data.token);
 
@@ -91,7 +89,6 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     msg.className = "error";
     msg.style.display = "block";
     
-    //SHOW USER-FRIENDLY ERROR MESSAGES
     const errorMessage = err.message.toLowerCase();
     
     if (errorMessage.includes("invalid credentials") || 
@@ -160,5 +157,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 
 });
+
 
 
