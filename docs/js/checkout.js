@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  //REQUIRE LOGIN
+  //Require login
   try {
     await requireAuth();
   } catch (error) {
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (expEl) expEl.addEventListener("input", () => (touched.exp = true));
   if (cvvEl) cvvEl.addEventListener("input", () => (touched.cvv = true));
 
-  //AUTOFILL NAME, EMAIL, PHONE, ADDRESS FROM DATABASE
+  //Autofill name, email, phone, address from the database
   try {
     const account = await authedApi("/account/me");
     console.log("Loaded account for checkout:", account);
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       emailInput.value = account.email;
     }
 
-    // Phone
+    // Phone Number
     if (phoneInput && !touched.phone && !phoneInput.value) {
       const phoneNumber = account.phone || account.shipping_phone;
       if (phoneNumber) phoneInput.value = phoneNumber;
@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         cardNumberEl.value = "**** **** **** " + last4;
       }
 
-      // Expiration
+      // Expiration date
       if (expEl && !touched.exp && !expEl.value) {
         if (defaultMethod.expiryDate) {
           expEl.value = defaultMethod.expiryDate;
@@ -175,7 +175,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     calcEl.textContent = "";
   }
 
-  //PLACE ORDER
+  // Place order
   const btn = document.getElementById("place-order");
   if (!btn) return;
 
@@ -235,4 +235,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
 });
+
 
